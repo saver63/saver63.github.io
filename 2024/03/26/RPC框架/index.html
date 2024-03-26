@@ -179,17 +179,26 @@
         
             <span class="meta-info-item post-create-date">
                 <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-03-26 18:18:34</span>
+                <span class="datetime">2024-03-26 20:25:05</span>
             </span>
 
             <span class="meta-info-item post-update-date">
                 <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Tue Mar 26 2024 18:21:47 GMT+0800">2024-03-26 18:21:47</span>
+                <span class="datetime" data-updated="Tue Mar 26 2024 20:33:01 GMT+0800">2024-03-26 20:33:01</span>
             </span>
         
 
         
 
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/java/">java</a></li>
+                        
+                    
+                </ul>
+            </span>
         
 
         
@@ -209,17 +218,13 @@
                 <div class="post-content keep-markdown-body">
                     
 
-                    <h2 id="写demo"><a href="#写demo" class="headerlink" title="写demo"></a>写demo</h2><p>RPC:远程过程调用</p>
+                    <h3 id="RPC框架"><a href="#RPC框架" class="headerlink" title="RPC框架"></a>RPC框架</h3><p>RPC:远程过程调用</p>
 <p>作用：调用其他项目的所有能力不需要再一个个的法web请求，而是一次性在rpc中集中调用</p>
-<p>实现过程</p>
-<p>基本过程</p>
-<p><img src="E:\工作\work\网站\Snipaste_2024-03-19_09-27-24.png" alt="Snipaste_2024-03-19_09-27-24"></p>
-<p>服务提供方细分</p>
-<p><img src="E:\工作\work\网站\Snipaste_2024-03-19_09-35-39.png" alt="Snipaste_2024-03-19_09-35-39"></p>
-<p>简化消费者发送请求的代码</p>
-<p><img src="E:\工作\work\网站\Snipaste_2024-03-19_09-39-14.png" alt="Snipaste_2024-03-19_09-39-14"></p>
+<p><img   src="E:\work\notebook\source_posts\RPC框架\Snipaste_2024-03-19_09-27-24.png"  alt="Snipaste_2024-03-19_09-27-24"></p>
+<h4 id="写demo"><a href="#写demo" class="headerlink" title="写demo"></a>写demo</h4><p>基本过程</p>
+<p><img   src="E:\work\notebook\source_posts\RPC框架\Snipaste_2024-03-19_09-39-14.png"  alt="Snipaste_2024-03-19_09-39-14"></p>
 <p>使用流程</p>
-<p><img src="E:\工作\work\网站\Snipaste_2024-03-19_09-45-46.png" alt="Snipaste_2024-03-19_09-45-46"></p>
+<p><img   src="E:\work\notebook\source_posts\RPC框架\Snipaste_2024-03-19_09-45-46.png"  alt="Snipaste_2024-03-19_09-45-46"></p>
 <h4 id="每个模块的作用"><a href="#每个模块的作用" class="headerlink" title="每个模块的作用"></a>每个模块的作用</h4><p>1.公共模块：编写和服务相关的接口和数据模型，需要把公共模块引入消费者和服务提供方</p>
 <p>注意：在公共模块编写的实体类需要序列化</p>
 <p>2.服务提供者：真正实现接口的模块</p>
@@ -240,12 +245,165 @@
 <p>注意：本地服务注册器和注册中心的区别</p>
 <p>注册中心侧重于管理注册的服务，提供服务信息给消费者</p>
 <p>本地服务注册器的作用是根据服务名获取到对应的实现类</p>
+<h4 id="功能一：全局加载配置"><a href="#功能一：全局加载配置" class="headerlink" title="功能一：全局加载配置"></a>功能一：全局加载配置</h4><h5 id="需求分析"><a href="#需求分析" class="headerlink" title="需求分析"></a>需求分析</h5><p>定义全局配置加载功能，让RPC框架轻松地从配置文件中读取配置，并且维护一个全局配置对象，便于框架快速获取一致的配置</p>
+<h4 id="功能二：接口mock"><a href="#功能二：接口mock" class="headerlink" title="功能二：接口mock"></a>功能二：接口mock</h4><p>mock：模拟远程服务行为，模拟对象，通常用于测试代码中，特别是单元测试中</p>
+<p>设计方案：通过动态代理创建一个调用方法时返回固定值的对象</p>
+<h4 id="功能三：实现序列化器与SPI机制"><a href="#功能三：实现序列化器与SPI机制" class="headerlink" title="功能三：实现序列化器与SPI机制"></a>功能三：实现序列化器与SPI机制</h4><h5 id="1-序列化器选择"><a href="#1-序列化器选择" class="headerlink" title="1.序列化器选择"></a>1.序列化器选择</h5><hr>
+<p>主流序列化方式对比</p>
+<p>1.JSON</p>
+<p>优点:易读性、可读性好，便于人类理解和调试，跨语言支持广泛</p>
+<p>缺点：</p>
+<p>​	1.序列化后数据量大（JSON用文本存储需要额外的字符表示键、值和数据结构）</p>
+<p>​	2.不能很好地处理复杂的数据结构和循环引用，可能导致性能下降或者序列化失败</p>
+<p>2.Hessian</p>
+<p>优点：二进制序列化（数据量小，网络传输效率高）、支持跨语言，适用于分布式系统中的服务调用</p>
+<p>缺点：性能较JSON略低（对象转换为二进制格式）、对象必须实现Serializable接口，限制了可序列化的对象范围</p>
+<p>3.Kryo</p>
+<p>优点：</p>
+<p>​	1.高性能，序列化和反序列化速度</p>
+<p>​	2.支持循环引用和自定义序列化器，适用于复杂的对象结构</p>
+<p>​	3.无需实现Serializable接口,可以序列化任意对象</p>
+<p>缺点:</p>
+<p>​	1.不跨语言，只适用于Java</p>
+<p>​	2.对象的序列化格式不够友好，不易读懂和调试</p>
+<p>4.Protobuf</p>
+<p>优点：</p>
+<p>​	1.高效的二进制序列化，序列化后的数据量极小</p>
+<p>​	2.跨语言支持，并且提供了多种语言的实现库</p>
+<p>​	3.支持版本化向前&#x2F;向后兼容性</p>
+<p>缺点：</p>
+<p>​	1.配置相对复杂，需要先定义数据结构的消息格式</p>
+<p>​	2.对象的序列化格式不易读懂，不便于调试</p>
+<hr>
+<h5 id="2-开发者指定（动态）使用的序列化器"><a href="#2-开发者指定（动态）使用的序列化器" class="headerlink" title="2.开发者指定（动态）使用的序列化器"></a>2.开发者指定（动态）使用的序列化器</h5><p>在配置文件中直接使用</p>
+<p>使用方式：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># application.yml (Spring Boot)</span></span><br><span class="line"><span class="attr">dubbo:</span></span><br><span class="line"> <span class="attr">protocol:</span></span><br><span class="line">   <span class="attr">serialization:</span> <span class="string">hessian2</span></span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># dubbo.properties</span></span><br><span class="line"><span class="attr">dubbo.protocol.serialization</span>=<span class="string">hessian2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="attr">dubbo.consumer.serialization</span>=<span class="string">hessian2</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># or</span></span><br><span class="line"><span class="attr">dubbo.reference.com.demo.DemoService.serialization</span>=<span class="string">hessian2</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="3-定制序列化器"><a href="#3-定制序列化器" class="headerlink" title="3.定制序列化器"></a>3.定制序列化器</h5><p>RPC框架可以读取到用户自定义的类路径，加载这个类作为Serializer序列化接口的实现</p>
+<p>实现方式：SPI机制</p>
+<h5 id="SPI"><a href="#SPI" class="headerlink" title="SPI"></a>SPI</h5><p>服务提供接口主要用于实现模块化开发和插件化扩展</p>
+<p>允许服务提供者通过特定的配置文件将自己的实现注册到系统中，然后系统通过反射机制动态加载这些实现，而不需要修改原始框架代码，从而实现了系统的解耦，提高了可扩展性</p>
+<p>如何实现SPI？</p>
+<p>1.系统实现</p>
+<p>直接使用java自带的API即可</p>
+<p>2.用户自定义SPI实现</p>
+<p><strong>根据配置加载到类即可</strong></p>
+<p>序列化器名称 &#x3D; 序列化器实现类所在位置</p>
+<h4 id="功能四：注册中心的基本实现"><a href="#功能四：注册中心的基本实现" class="headerlink" title="功能四：注册中心的基本实现"></a>功能四：注册中心的基本实现</h4><p>需求：</p>
+<p>注册中心核心能力</p>
+<p>1.数据分布式存储：集中的注册信息数据存储、读取和共享</p>
+<p>2.服务注册：服务提供者上报服务信息到注册中心</p>
+<p>3.服务发现：服务消费者从注册中心拉取服务信息</p>
+<p>4.心跳检测：定期检查服务提供者的存活状态</p>
+<p>5.服务注销：手动剔除结点、或者自动剔除失效结点</p>
+<p>6.更多优化点：注册中心本身的容错、服务消费者缓存</p>
+<p>注册中心的考虑</p>
+<p>技术选型：集中存储和读取数据、数据过去、数据监听、高性能，高可用，可靠，稳定性，数据一致性、社区的生态和活跃度等。</p>
+<h5 id="Etcd"><a href="#Etcd" class="headerlink" title="Etcd"></a>Etcd</h5><p>Etcd是一个Go语言实现的、开源的、分布式的键值存储系统，它主要用于分布式系统中的服务发现，配置管理和分布式锁等场景</p>
+<p>优点：</p>
+<p>1.性能高（云原生应用的基础设施，存储一些元信息）</p>
+<p>2.采用Raft一致性算法保证数据的一致性和可靠性，具有高可用性、强一致性、分布式特性等特点</p>
+<p>3.简单易用</p>
+<p>数据结构：</p>
+<p>​	1.Key(键)：Etcd中的基本数据单元，类似于文件系统中的文件名。每个键都唯一标识一个值，并且可以包含子健，形成类似于路径的层次结构</p>
+<p>​	2.Value（值）:与键关联的数据，可以是任意类型的数据，通常是字符串形式</p>
+<p>应用：</p>
+<p>​	1.租约：键值对过期时间</p>
+<p>​	2.监听：监听特定键的变化，并发出通知</p>
+<p>保持数据的一致性</p>
+<p>1.表层：Etcd支持事务操作，能够保证数据一致性</p>
+<p>2.底层：Etcd使用Raft一致性算法保持数据的一致性</p>
+<p>Raft:确保分布式系统中所有节点在任何时间点都能达成一致的数据视图</p>
+<p>理解：从所有结点中选出领导者，接收客户发送的请求，然后再分发给其他成员，当大多数成员都写入到自己的日志中时，才能视为已提交，领导者会给客户端响应，然后该操作就会被视为已提交</p>
+<p>当领导者失联时，Raft会选出其他领导者来保持一致性</p>
+<p>开源地址：<a class="link"   target="_blank" rel="noopener" href="https://github.com/etcd-io/etcd" >https://github.com/etcd-io/etcd<i class="fas fa-external-link-alt"></i></a></p>
+<p>etcd可视化工具：<a class="link"   target="_blank" rel="noopener" href="https://github.com/evildecay/etcdkeeper" >https://github.com/evildecay/etcdkeeper<i class="fas fa-external-link-alt"></i></a></p>
+<h4 id="使用TCP协议"><a href="#使用TCP协议" class="headerlink" title="使用TCP协议"></a>使用TCP协议</h4><p>目前使用HTTP协议的缺点：</p>
+<p>HTTP协议中的头部信息和请求响应格式较重，会影响网络传输性能</p>
+<p>使用TCP的好处：性能更高、更灵活、更安全</p>
+<h5 id="设计方案"><a href="#设计方案" class="headerlink" title="设计方案"></a>设计方案</h5><p>RPC分为两大核心部分</p>
+<p>1.自定义网络传输</p>
+<p>​	目的：选择一个高性能通信网络协议和传输方式</p>
+<p>网络通信协议和传输方式：TCP</p>
+<p>2.自定义消息结构</p>
+<p>​	目的：用最少的空间传递需要的信息</p>
+<p>如何减少空间：使用的数据类型最小（byte）</p>
+<p>消息内需要什么信息？</p>
+<p>魔数：安全校验，放在服务器处理非框架的消息（类似于HTTPS的安全整数）</p>
+<p>版本号：保证请求和响应的一致性（HTTP协议有1.0&#x2F;2.0等版本）</p>
+<p>序列化方式：来告诉服务端和客户端如何解析数据(类似HTTP有请求头和响应头)</p>
+<p>状态：如果是响应，记录响应的结果(类似HTTP的200状态代码)</p>
+<p>请求id：唯一标识某个请求</p>
+<p>body内容数据：请求体</p>
+<p>TCP存在的问题：半包和粘包问题，传输的数据不完整</p>
+<h5 id="解决半包粘包问题"><a href="#解决半包粘包问题" class="headerlink" title="解决半包粘包问题"></a>解决半包粘包问题</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void doStart(int port) &#123;</span><br><span class="line">    //构建Vert.x实例</span><br><span class="line">    Vertx vertx = Vertx.vertx();</span><br><span class="line"></span><br><span class="line">    //创建TCP服务器</span><br><span class="line">    NetServer server = vertx.createNetServer();</span><br><span class="line"></span><br><span class="line">    //处理请求</span><br><span class="line">    server.connectHandler(socket-&gt;&#123;</span><br><span class="line">        //处理连接</span><br><span class="line">        socket.handler(buffer-&gt;&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            //测试网络通信过程中的粘包和半包</span><br><span class="line">            String testMessage = &quot;Hello, server!Hello, server!Hello, server!Hello, server!&quot;;</span><br><span class="line">            int messageLength = testMessage.getBytes().length;</span><br><span class="line">            //构造parser，解决半包粘包关键</span><br><span class="line">            RecordParser parser = RecordParser.newFixed(messageLength);</span><br><span class="line">            parser.setOutput(new Handler&lt;Buffer&gt;() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                public void handle(Buffer buffer) &#123;</span><br><span class="line">                    String str = new String(buffer.getBytes());</span><br><span class="line">                    System.out.println(str);</span><br><span class="line">                    if (testMessage.equals(str))&#123;</span><br><span class="line">                        System.out.println(&quot;good&quot;);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">            </span><br><span class="line">            socket.handler(parser);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
+
+
+
+<p>逻辑：先从请求头开始使用parser查找固定长度，再通过读取到的请求头来判断请求体长度，来确定下面的parser的长度</p>
+<p>服务器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">@Slf4j</span><br><span class="line">public class VertxTcpServer implements HttpServer &#123;</span><br><span class="line"></span><br><span class="line">    private byte[] handleRequest(byte[] requestData)&#123;</span><br><span class="line">        //在这里编写处理请求的逻辑,根据requestData构造响应数据并返回</span><br><span class="line">        //实际逻辑需要根据具体的业务需求来实现</span><br><span class="line">        return &quot;Hello, client&quot;.getBytes();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void doStart(int port) &#123;</span><br><span class="line">        //构建Vert.x实例</span><br><span class="line">        Vertx vertx = Vertx.vertx();</span><br><span class="line"></span><br><span class="line">        //创建TCP服务器</span><br><span class="line">        NetServer server = vertx.createNetServer();</span><br><span class="line"></span><br><span class="line">        //处理请求</span><br><span class="line">        server.connectHandler(socket-&gt;&#123;</span><br><span class="line">            //构造 parser</span><br><span class="line">            RecordParser parser = RecordParser.newFixed(8);</span><br><span class="line">            parser.setOutput(new Handler&lt;Buffer&gt;() &#123;</span><br><span class="line">                //初始化</span><br><span class="line">                int size = -1;</span><br><span class="line">                //一次完整的读取(头+ 体)</span><br><span class="line">                Buffer resultBuffer = Buffer.buffer();</span><br><span class="line">                @Override</span><br><span class="line">                public void handle(Buffer buffer) &#123;</span><br><span class="line">                    if (-1 == size)&#123;</span><br><span class="line">                        //读取消息体长度</span><br><span class="line">                        size = buffer.getInt(4);</span><br><span class="line">                        parser.fixedSizeMode(size);</span><br><span class="line">                        //写入头信息到结果</span><br><span class="line">                        resultBuffer.appendBuffer(buffer);</span><br><span class="line">                    &#125;else &#123;</span><br><span class="line">                        //写入体信息到结果</span><br><span class="line">                        resultBuffer.appendBuffer(buffer);</span><br><span class="line">                        System.out.println(resultBuffer.toString());</span><br><span class="line">                        //重置一轮</span><br><span class="line">                        parser.fixedSizeMode(8);</span><br><span class="line">                        size = -1;</span><br><span class="line">                        resultBuffer = Buffer.buffer();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            socket.handler(parser);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">        //启动TCP服务器并监听指定端口</span><br><span class="line">        server.listen(port, result-&gt;&#123;</span><br><span class="line">            if (result.succeeded())&#123;</span><br><span class="line">                System.out.println(&quot;TCP server started on port&quot; + port);</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                System.err.println(&quot;Failed to start TCP server:&quot; + result.cause());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>客户端</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class VertxTcpClient &#123;</span><br><span class="line">    public void start()&#123;</span><br><span class="line">        //创建Vert.x实例</span><br><span class="line">        Vertx vertx = Vertx.vertx();</span><br><span class="line"></span><br><span class="line">        vertx.createNetClient().connect(8888,&quot;localhost&quot;, result-&gt;&#123;</span><br><span class="line">            if (result.succeeded())&#123;</span><br><span class="line">                System.out.println(&quot;Connected to TCP server&quot;);</span><br><span class="line">                io.vertx.core.net.NetSocket socket = result.result();</span><br><span class="line"></span><br><span class="line">                //测试网络通信过程</span><br><span class="line">                for (int i = 0; i&lt;1000; i++)&#123;</span><br><span class="line">                    //发送数据</span><br><span class="line">                    Buffer buffer = Buffer.buffer();</span><br><span class="line">                    String str = &quot;Hello, server!Hello, server!Hello, server!Hello, server!&quot;;</span><br><span class="line">                    buffer.appendInt(0);</span><br><span class="line">                    buffer.appendInt(str.getBytes().length);</span><br><span class="line">                    buffer.appendBytes(str.getBytes());</span><br><span class="line">                    socket.write(buffer);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                //接收响应</span><br><span class="line">                socket.handler(buffer -&gt; &#123;</span><br><span class="line">                    System.out.println(&quot;Received response from server: &quot; + buffer.toString());</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                System.err.println(&quot;Failed to connect to TCP server&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        new VertxTcpClient().start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>由于封装半包粘包处理器的代码量大，而且ServiceProxy和Handler都需要接收Buffer，都要半包和粘包问题处理，所以可以对代码进行封装复用</p>
+<h5 id="装饰者模式"><a href="#装饰者模式" class="headerlink" title="装饰者模式"></a>装饰者模式</h5><p>使用RecordParser对原有的Buffer处理器的能力进行增强</p>
+<p>在server.tcp包下增强</p>
+<p>代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 装饰者模式（使用recordParser对原有buffer处理能力进行增强）</span><br><span class="line"> */</span><br><span class="line">public class TcpBufferHandlerWrapper implements Handler&lt;Buffer&gt; &#123;</span><br><span class="line"></span><br><span class="line">    private final RecordParser recordParser;</span><br><span class="line"></span><br><span class="line">    public TcpBufferHandlerWrapper(Handler&lt;Buffer&gt; bufferHandler)&#123;</span><br><span class="line">        recordParser = initRecordParser(bufferHandler);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void handle(Buffer buffer) &#123;</span><br><span class="line">        recordParser.handle(buffer);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private RecordParser initRecordParser(Handler&lt;Buffer&gt; bufferHandler)&#123;</span><br><span class="line">        //构造parser</span><br><span class="line">        RecordParser parser = RecordParser.newFixed(ProtocolConstant.MESSAGE_HEADER_LENGTH);</span><br><span class="line">        parser.setOutput(new Handler&lt;Buffer&gt;() &#123;</span><br><span class="line">            //初始化</span><br><span class="line">            int size = -1;</span><br><span class="line">            //一次完整的读取(头+ 体)</span><br><span class="line">            Buffer resultBuffer = Buffer.buffer();</span><br><span class="line">            @Override</span><br><span class="line">            public void handle(Buffer buffer) &#123;</span><br><span class="line">                if (-1 == size)&#123;</span><br><span class="line">                    //读取消息体长度</span><br><span class="line">                    size = buffer.getInt(13);</span><br><span class="line">                    parser.fixedSizeMode(size);</span><br><span class="line">                    //写入头信息到结果</span><br><span class="line">                    resultBuffer.appendBuffer(buffer);</span><br><span class="line">                &#125;else &#123;</span><br><span class="line">                    //写入体信息到结果</span><br><span class="line">                    resultBuffer.appendBuffer(buffer);</span><br><span class="line">                    //已拼接为完整Buffer,执行处理</span><br><span class="line">                    bufferHandler.handle(resultBuffer);</span><br><span class="line">                    //重置一轮</span><br><span class="line">                    parser.fixedSizeMode(ProtocolConstant.MESSAGE_HEADER_LENGTH);</span><br><span class="line">                    size = -1;</span><br><span class="line">                    resultBuffer = Buffer.buffer();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        return parser;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * TCP请求处理器</span><br><span class="line"> */</span><br><span class="line">public class TcpServerHandler implements Handler&lt;NetSocket&gt; &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 处理请求</span><br><span class="line">     * </span><br><span class="line">     * @param scoket the event to handle</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void handle(NetSocket netSocket) &#123;</span><br><span class="line">        //处理连接</span><br><span class="line">        netSocket.handler(buffer -&gt; &#123;</span><br><span class="line">            //接受请求，解码</span><br><span class="line">            ProtocolMessage&lt;RpcRequest&gt; protocolMessage;</span><br><span class="line"></span><br><span class="line">            try &#123;</span><br><span class="line">                protocolMessage = (ProtocolMessage&lt;RpcRequest&gt;) ProtocolMessageDecoder.decode(buffer);</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                throw new RuntimeException(&quot;协议消息解码错误&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            RpcRequest rpcRequest = protocolMessage.getBody();</span><br><span class="line"></span><br><span class="line">            //处理请求</span><br><span class="line">            //构造响应结果对象</span><br><span class="line">            RpcResponse rpcResponse = new RpcResponse();</span><br><span class="line"></span><br><span class="line">            try &#123;</span><br><span class="line">                //获取要调用的服务实现类</span><br><span class="line">                Class&lt;?&gt; implClass = LocalRegistry.get(rpcRequest.getServiceName());</span><br><span class="line">                Method method = implClass.getMethod(rpcRequest.getMethodName(),rpcRequest.getParameterTypes());</span><br><span class="line">                Object result = method.invoke(implClass.newInstance(),rpcRequest.getArgs());</span><br><span class="line">                //封装返回结果</span><br><span class="line">                rpcResponse.setData(result);</span><br><span class="line">                rpcResponse.setDataType(method.getReturnType());</span><br><span class="line">                rpcResponse.setMessage(&quot;ok&quot;);</span><br><span class="line">            &#125; catch (Exception e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">                rpcResponse.setMessage(e.getMessage());</span><br><span class="line">                rpcResponse.setException(e);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            //发送响应，编码</span><br><span class="line">            ProtocolMessage.Header header = protocolMessage.getHeader();</span><br><span class="line">            header.setType((byte) ProtocolMessageTypeEnum.RESPONSE.getKey());</span><br><span class="line">            ProtocolMessage&lt;RpcResponse&gt; responseProtocolMessage = new ProtocolMessage&lt;&gt;(header, rpcResponse);</span><br><span class="line">            try &#123;</span><br><span class="line">                Buffer encode = ProtocolMessageEncoder.encode(responseProtocolMessage);</span><br><span class="line">                netSocket.write(encode);</span><br><span class="line">            &#125; catch (IOException e) &#123;</span><br><span class="line">                throw new RuntimeException(&quot;协议消息编码错误&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="功能六：负载均衡"><a href="#功能六：负载均衡" class="headerlink" title="功能六：负载均衡"></a>功能六：负载均衡</h4><p>负载：网络请求、事务、数据处理任务等</p>
+<p>均衡：分摊每个工作者的压力</p>
+<p>负载均衡算法：</p>
+<p>1.轮询</p>
+<p>场景：适用于各服务器性能相近的情况</p>
+<p>2.随机</p>
+<p>场景：适用于服务器性能相近且负载均衡的情况</p>
+<p>3.加权轮询：根据服务的性能或权重分配请求</p>
+<p>场景：适用于服务器性能不均的情况</p>
+<p>4.加权随机</p>
+<p>场景：适用于服务器性能不均的情况</p>
+<p>5.最小连接数：选择当前连接数最少的服务器来处理请求，适用于长连接场景</p>
+<p>6.IP Hash:根据客户端ip地址的哈希值选择服务器处理请求，确保同一客户端的情况始终被分配到同一台服务器上</p>
+<p>场景：适用于需要保持会话一致性场景</p>
+<h5 id="一致性Hash"><a href="#一致性Hash" class="headerlink" title="一致性Hash"></a>一致性Hash</h5><p>用于将请求分配到多个结点或服务器上，所以非常适用于负载均衡</p>
+<p>核心思想：hash空间划分成环状，每个请求根据哈希值找该环上第一个大于等于该哈希值的结点，将请求路由到该节点上</p>
+<p>还解决结点下线和倾斜问题</p>
+<p>1.节点下线：当某个结点下线后，其负载会被均分到其他结点上，而不影响到整个系统的稳定性</p>
+<p>2.倾斜问题：通过虚拟节点的引入，将每个物理结点映射到多个虚拟节点上，使得节点在哈希环上分布均匀，减少了结点间的负载差异</p>
+<p>注意：每次调用负载均衡器时，都会重新构造Hash环，这是为了能够即时处理结点的变化。</p>
 
                 </div>
                 
 
                 <div class="post-bottom-tags-and-share border-box">
                     <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/java/">java</a>
+                                    </li>
+                                
+                            </ul>
                         
                     </div>
                     <div>
@@ -262,11 +420,11 @@
                             <div class="next-post">
                                 <a class="next"
                                    rel="next"
-                                   href="/2024/03/26/hello-world/"
-                                   title="Hello World"
+                                   href="/2024/03/26/%E5%AE%A2%E6%B5%81%E9%87%8F%E6%99%BA%E8%83%BD%E5%88%86%E6%9E%90%E5%B9%B3%E5%8F%B0/"
+                                   title="客流量智能分析平台"
                                 >
                                     <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">Hello World</span>
+                                        <span class="post-nav-title-item text-ellipsis">客流量智能分析平台</span>
                                         <span class="post-nav-item">Next posts</span>
                                     </span>
                                     <span class="right arrow-icon flex-center">
