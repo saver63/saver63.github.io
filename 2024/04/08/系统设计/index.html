@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Keep Team">
+    
+    <title>
+        
+            系统设计 |
+        
+        Keep Theme
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Keep Theme","author":"Keep Team","avatar":"/images/avatar.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/","archives":"/archives"},"first_screen":{"enable":false,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":false},"social_contact":{"enable":false,"links":{"github":null,"weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":false,"percent":false,"hide_header":true},"home":{"announcement":null,"category":false,"tag":false,"post_datetime":"updated"},"post":{"author_badge":{"enable":true,"level_badge":true,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":null,"text":null}},"code_block":{"tools":{"enable":false,"style":"default"},"highlight_theme":"default"},"toc":{"enable":false,"number":false,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":false},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":false,"icp":{"enable":false,"record_code":null,"url":"https://beian.miit.gov.cn"},"site_deploy":{"enable":false,"provider":"github","url":null},"shields_style":{"enable":false,"custom":[{"link_url":null,"img_url":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.1.0"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Keep Theme
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                
+                                HOME
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/"
+                    >HOME</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives"
+                    >ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        系统设计
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/avatar.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">Keep Team</span>
+                                
+                                    <span class="author-badge">Lv2</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-04-08 14:50:58</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Mon Apr 08 2024 16:14:54 GMT+0800">2024-04-08 16:14:54</span>
+            </span>
+        
+
+        
+
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body">
+                    
+
+                    <h3 id="复杂高并发系统缓存设计"><a href="#复杂高并发系统缓存设计" class="headerlink" title="复杂高并发系统缓存设计"></a>复杂高并发系统缓存设计</h3><p>1.缓存穿透：</p>
+<p>对抗灰产：</p>
+<p>场景：商品搞促销，请求头里面带一个活动ID的字段，而且这个字段是不连续的，程序员不停调用这个接口，通过商品+活动ID，然后拼装了很多参数不停来攻击和查询系统，看系统还有哪些活动，然后它查询缓存不存在，然后就去查询数据库，导致数据库压力非常大。</p>
+<p>方案：</p>
+<p>​	1.缓存null值（缺点：大量的null值会把内存承爆）</p>
+<p>​	此时就会想到使用布隆过滤器</p>
+<p>​	缺点：布隆过滤器难以保证与数据库操作的原子性（数据的不一致），一般情况下使用超时时间做兜底，但是布隆过滤器是没法设置超时时间的。</p>
+<p>2.缓存击穿</p>
+<p>​	场景：一般出现在热key的场景，就是热key失效后大量的请求都去请求数据库，然后慢SQL就把系统拖死了，从而导致整个系统雪崩。</p>
+<p>​	方案：把DB的执行当做临界资源，加锁</p>
+<p>​				方法1：单机加锁（实现简单，但如果集群大，结点的数量多）	</p>
+<p>​				方法2：分布式锁（缓存失效后，所有的请求都去抢一个分布式锁，抢成功后再去请求数据库，从而保证一个集群只有一个请求去请求数据库）</p>
+<p>​				如果没抢到锁的情况该怎么办？</p>
+<p>​				抢不到锁就阻塞等待，再去取缓存（生产环境不用，存在一个很大的风险，因为当系统请求量过大，这个请求要阻塞多久？而如果等待的请求过多，会把整个RPC的连接池给打爆，更多的情况是让请求直接返回一个默认值，而不是让它直接阻塞等待在这里。那该如何去取默认值？在设置Key-Value时在Value上设置加一个字段，这个字段就是缓存逻辑过期时间，代码每次查询到缓存之后，去判断一下这个过期时间，如果这个时间已经过期了，再去抢这个分布式锁，再去查询数据库，把这个缓存更新。如果拿不到分布式锁就返回逻辑上过期的这个数据）</p>
+<p>3.缓存雪崩：缓存都要设置超时时间。因为无法做到缓存与数据库操作强一致，避免数据库数据跟缓存数据长时间保持不一致。当</p>
+<p>场景：系统在第一次部署时要做一个缓存预热，<strong>把大量的超时时间设置为同样的过期时间</strong>，如果刚好到了过期的时间点，大量的请求都打向数据库，这时候数据库很有可能被打卦。</p>
+<p>解决方案：设置缓存失效时做一个离散的处理，代码层面就是固定的时间加一个随机数去保证它的过期时间尽量分散在不同的时间范围。</p>
+<h3 id="数据库和缓存一致性遇到的挑战"><a href="#数据库和缓存一致性遇到的挑战" class="headerlink" title="数据库和缓存一致性遇到的挑战"></a>数据库和缓存一致性遇到的挑战</h3><p>缓存的数据如何保证跟数据库的一致性。</p>
+<p>缓存的一致性和事务ACID的一致性。</p>
+<p>CAP中的C是指多个副本之间逻辑上要相等</p>
+<p>ACID的C是指多个数据之间的逻辑上的约束关系</p>
+<p>不建议用缓存的场景？</p>
+<p>1.不建议缓冲查询频率不是很高的数据</p>
+<p>2.更新次数比查询次数高的话不建议去缓存</p>
+<p>3.对数据一致性要求极高的场景不建议用缓存</p>
+<p>数据库和缓存的一致性存在的问题和挑战</p>
+<p>缓存的一致性</p>
+<p>分析</p>
+<p>1.查询</p>
+<p>2.往数据库插入一条数据，这个时候请求先去查缓存查不到，再去请求数据库，这个情况不存在一致性问题。</p>
+<p>3.删除一条数据库的数据</p>
+<p>​	1.缓存不存在该数据的副本，删除数据库的数据，不存在一致性的问题。</p>
+<p>​	2.如果数据库删除后，缓存有该数据的副本，问题变复杂.</p>
+<p>​		策略：1.先删缓存，在删数据库（不行，读请求过来没查到缓存去查数据库老的数据，然后再塞到缓存中去，最终导致缓存有数据，而数据库没有数据，导致数据的不一致）</p>
+<p>​					2.先删数据库，再删缓存（有问题，两个线程，线程T1先读取老数据，还没有放到缓存中，T2删除数据库的数据和缓存中的数据，T1再把老数据塞到缓存里面，最终的结果也是缓存当中有老数据，而数据库当中没有数据。导致数据的不一致。因为数据的抖动和网络的情况都是不可控的）</p>
+<p>4.更新数据：</p>
+<p>​	策略：1.先更新缓存，再更新数据库</p>
+<p>​				2..先更新数据库，再更新缓存</p>
+<p>​	场景：T1线程更新了老的数据，还没有更新缓存，机器就GC</p>
+<p>​				T2线程更新了新数据和缓存</p>
+<p>​				T1又把老数据更新到缓存，这个时候导致数据库和缓存的不一致</p>
+<p>主流的策略：</p>
+<p>​	为什么主流的策略是：先更新数据库，再去删缓存？</p>
+<p>​	<img src="/.com//work\notebook\source_posts\系统设计\Snipaste_2024-04-08_15-43-04.png" alt="Snipaste_2024-04-08_15-43-04"></p>
+<p>这种方案：T1先查数据库，然后T1GC，然后T2查数据库把缓存删掉，然后T1删除缓存。T1，T2两次删除缓存达到的效果是一致的，都是导致缓存失效，然后去查数据库最新的数据塞到缓存里面。</p>
+<p>缺点：</p>
+<p><img src="/.com//work\notebook\source_posts\系统设计\Snipaste_2024-04-08_15-46-08.png" alt="Snipaste_2024-04-08_15-46-08"></p>
+<p>场景：缓存当中无数据，T1读取了数据库，然后GC，T2更新了数据库并删除缓存，之后T1醒来把老的数据塞到缓存，造成了数据的不一致。这就是产生延迟双删的根本原因</p>
+<p>如果是缓存的应用结点的本地内存的结点，并且是集群部署，这样还涉及到多节点缓存刷新的问题。</p>
+<p>补充：</p>
+<p>​	1.以上讨论是数据库和缓冲的最终一致，但如果是在执行更新过程中产生了不一致，该如何解决？加锁！，加缓存是为了提升性能但加锁会导致性能降低。这样子又是没有意义的。这就是为什么在设计缓存和数据库的一致性时都会给一个超时时间做一个兜底，避免极端情况导致的长时间的数据不一致性</p>
+<p>​	2.业界还有一种方案：监听binlog异步的方式刷新缓存</p>
+<p>异步的实现方式：</p>
+<p>​	1.异步起一个线程，单独刷新缓存</p>
+<p>​	2.发一个消息</p>
+<p>业界用的比较多的异步方式：监听MySQL的binlog或者CDC，然后加人canal+MQ的中间件去监听刷新缓存的方式。</p>
+<p>异步化的优势：</p>
+<p>​	1.跟业务代码解耦（理想情况下写业务代码是不太关心存储的细节）</p>
+<p>​	2.性能（针对高并发的情况，用上缓存就说明对于并发要求肯定比较高，那原先的同步更新缓存和数据库这一步的时间可以节省下来，这样有利于提升整个接口的性能）</p>
+<p>缺点：</p>
+<p>​	1.依赖了中间件，就要去维护它的高可用，增加系统的运维成本。</p>
+<p>​	2.一致性的时间会拉长，相比同步的去更新缓存和数据库，它异步的链路会拉长，到达一致性的时间会更长，因为中间还涉及了这种MQ的中间件。如果有消息堆积，中间达到一致性的时间会比较长。就要考虑业务是否能够容忍这种情况。（如果消息挂了，或者数据一直没有更新，会对业务产生什么影响？）</p>
+<p>问题：在做服务拆分时，觉得是每个服务单独一个数据库好呢，还是多个服务共享一个通用的数据库实例</p>
+<p>优点:</p>
+<p>​	1.运维成本低，拆分的成本也比较低，不设计数据迁移，只需要把上面的服务拆分开即可</p>
+<p>缺点：服务内部的细节做封装，相当于把底层内部的物理结构，存储结构暴露给外部。如果是多个服务共享一个数据库实例。举个例子如果一个服务要去做迭代，要执行DDL语句，敢执行？这样的话要去评估风险，思考哪个表结构会有哪些服务在用。更不要提其中某些服务因为各种原因改底层的数据库的一些存储结构。成本非常高。基于微服务的设计，倾向于每一个服务自己封装存储结构的细节，不要暴露给外部。</p>
+<p>回到最开始的问题，监听MQ倾向于放到原先服务里。</p>
+
+                </div>
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2024/04/09/%E5%93%88%E5%B8%8C%E8%A1%A8/"
+                                   title="哈希表"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">哈希表</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2024/04/08/MySQL/"
+                                   title="MySQL"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">MySQL</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">Keep Team</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+        
+
+        <div class="count-item info-item default">
+            
+
+            
+
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+</main>
+
+
+
+<!-- common -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local-search -->
+
+
+<!-- lazyload -->
+
+
+<div class="">
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>

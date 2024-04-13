@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Keep Team">
+    
+    <title>
+        
+            贪心算法 |
+        
+        Keep Theme
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.svg">
+    
+    
+<link rel="stylesheet" href="/font/css/fontawesome.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/regular.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/solid.min.css">
+
+    
+<link rel="stylesheet" href="/font/css/brands.min.css">
+
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"example.com","root":"/","language":"en"}
+    KEEP.theme_config = {"base_info":{"primary_color":"#0066cc","title":"Keep Theme","author":"Keep Team","avatar":"/images/avatar.svg","logo":"/images/logo.svg","favicon":"/images/logo.svg"},"menu":{"home":"/","archives":"/archives"},"first_screen":{"enable":false,"background_img":"/images/bg.svg","background_img_dark":"/images/bg.svg","description":"Keep writing and Keep loving.","hitokoto":false},"social_contact":{"enable":false,"links":{"github":null,"weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":false,"percent":false,"hide_header":true},"home":{"announcement":null,"category":false,"tag":false,"post_datetime":"updated"},"post":{"author_badge":{"enable":true,"level_badge":true,"custom_badge":["One","Two","Three"]},"word_count":{"wordcount":false,"min2read":false},"datetime_format":"YYYY-MM-DD HH:mm:ss","copyright_info":false,"share":false,"reward":{"enable":false,"img_link":null,"text":null}},"code_block":{"tools":{"enable":false,"style":"default"},"highlight_theme":"default"},"toc":{"enable":false,"number":false,"expand_all":false,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":false,"preload":false},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":2},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":false},"lazyload":{"enable":false},"cdn":{"enable":false,"provider":"cdnjs"},"pjax":{"enable":false},"footer":{"since":2020,"word_count":false,"icp":{"enable":false,"record_code":null,"url":"https://beian.miit.gov.cn"},"site_deploy":{"enable":false,"provider":"github","url":null},"shields_style":{"enable":false,"custom":[{"link_url":null,"img_url":null}]}},"inject":{"enable":false,"css":[null],"js":[null]},"root":"","source_data":{},"version":"4.1.0"}
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"}
+    KEEP.language_code_block = {"copy":"Copy code","copied":"Copied","fold":"Fold code block","folded":"Folded"}
+    KEEP.language_copy_copyright = {"copy":"Copy copyright info","copied":"Copied","title":"Original post title","author":"Original post author","link":"Original post link"}
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/logo.svg">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               Keep Theme
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                
+                                HOME
+                            </a>
+                        </li>
+                    
+                        
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/"
+                    >HOME</a>
+                </li>
+            
+                
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives"
+                    >ARCHIVES</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+
+            <div class="post-content-bottom border-box">
+                
+                    <div class="post-title">
+                        贪心算法
+                    </div>
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/avatar.svg">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">Keep Team</span>
+                                
+                                    <span class="author-badge">Lv2</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
+                <span class="datetime">2024-04-02 08:36:54</span>
+            </span>
+
+            <span class="meta-info-item post-update-date">
+                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
+                <span class="datetime" data-updated="Wed Apr 03 2024 08:46:07 GMT+0800">2024-04-03 08:46:07</span>
+            </span>
+        
+
+        
+
+        
+
+        
+        
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body">
+                    
+
+                    <p>本质：找到每个阶段的局部最优，然后再找到全局最优</p>
+<p>贪心无套路</p>
+<h3 id="分发饼干"><a href="#分发饼干" class="headerlink" title="分发饼干"></a>分发饼干</h3><p>胃口：1,2,7,10</p>
+<p>饼干:  1,3,5,9</p>
+<p>输出：3</p>
+<p>只有当饼干大于胃口时，才能分发</p>
+<p>基本思路：利用大饼干去尽量喂给胃口大的孩子</p>
+<p>假设</p>
+<p>局部思路：大饼干去喂胃口大的小孩</p>
+<p>全局最优：用饼干去喂尽量多的孩子</p>
+<p>找不出明显的反例去否决我们的假设</p>
+<p>代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin1 &#123;</span><br><span class="line"></span><br><span class="line">    // 思路2：优先考虑胃口，先喂饱大胃口</span><br><span class="line">    public int findContentChildren(int[] g, int[] s) &#123;</span><br><span class="line">        Arrays.sort(g);</span><br><span class="line">        Arrays.sort(s);</span><br><span class="line">        int count = 0;</span><br><span class="line">        int start = s.length - 1;</span><br><span class="line">        // 遍历胃口</span><br><span class="line">        for (int index = g.length - 1; index &gt;= 0; index--) &#123;</span><br><span class="line">            if(start &gt;= 0 &amp;&amp; g[index] &lt;= s[start]) &#123;</span><br><span class="line">                start--;</span><br><span class="line">                count++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="摆动序列"><a href="#摆动序列" class="headerlink" title="摆动序列"></a>摆动序列</h3><p>样例1：相邻元素相减是一正一负</p>
+<p>例如：[1,7,4,9,2,5]</p>
+<p>6 ，-3， 5，-7，3</p>
+<p>输出：6</p>
+<p>样例2: 1,17,5,10,13,15,10,5,16,8</p>
+<p><img src="/.com//work\notebook\source_posts\贪心算法\Snipaste_2024-04-02_09-19-09.png" alt="Snipaste_2024-04-02_09-19-09"></p>
+<p>根据上图可以判断出，要想变成摆动序列则必须把连续上升的数字给删去，保留峰值才能确保是摇摆序列</p>
+<p>局部最优：删除单调递增坡度上的值</p>
+<p>全局最优：整个序列变成摆动最长的序列</p>
+<p>思路：不需要去真的删除这个数组上的值，而是遍历这个数组，如果这个值是极大值或极小值则放进一个新的数组，如果不是则跳过。</p>
+<p>判断摆动的条件:</p>
+<p>preDiff(nums[i] - nums[i-1]);</p>
+<p>currDiff(nums[i-1] - nums[i]);</p>
+<p>if (preDiff&gt;0 &amp;&amp; currDiff&lt;0) ||  (preDiff&lt;0 &amp;&amp; currDiff&gt;0) </p>
+<p><img src="/.com//work\notebook\source_posts\贪心算法\Snipaste_2024-04-02_09-31-38.png" alt="Snipaste_2024-04-02_09-31-38"></p>
+<p>​				</p>
+<p>考虑情况：</p>
+<p>1.上下破有平坡：相邻元素数值相同</p>
+<p>​	例如 1-2-2-2-1 -&gt; 1-2-1 ,摆动最长序列为3</p>
+<p>​	如果删除相同元素中的前两个元素：则判断摆动的条件为</p>
+<p>​	if (preDiff&gt;&#x3D;0 &amp;&amp; currDiff&lt;0)<img src="/.com//work\notebook\source_posts\贪心算法\Snipaste_2024-04-02_09-33-13.png" alt="Snipaste_2024-04-02_09-33-13"></p>
+<p>​	如果删除相同的元素为后两个元素:则判断摆动的条件变为</p>
+<p>​	if (preDiff&lt;&#x3D;0 &amp;&amp; currDiff&gt;0)</p>
+<p>2.首尾元素（首尾元素都要算坡度）</p>
+<p>​	该序列只有2个元素的情况下</p>
+<p>​	例如:1-2</p>
+<p>​	在这种情况下是没有preDiff的</p>
+<p>​	<img src="/.com//work\notebook\source_posts\贪心算法\Snipaste_2024-04-02_09-40-01.png" alt="Snipaste_2024-04-02_09-40-01"></p>
+<p>方法：在前面增加一个虚拟的元素</p>
+<p>​	也符合if (preDiff&gt;0 &amp;&amp; currDiff&lt;0) ||  (preDiff&lt;0 &amp;&amp; currDiff&gt;0) 这个条件</p>
+<p>假设最右端有一个波动，for循环只遍历到倒数第二个即可</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin2 &#123;</span><br><span class="line"></span><br><span class="line">    int tanXin(int[] nums)&#123;</span><br><span class="line">		//只有一个元素，默认返回一个波动</span><br><span class="line">        if (nums.length == 1)&#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125;</span><br><span class="line">        int preDiff = 0;</span><br><span class="line">        int curDiff = 0;</span><br><span class="line">        //假设最右边有一个波动</span><br><span class="line">        int result = 1;</span><br><span class="line">        //遍历到倒数第二个</span><br><span class="line">        for (int i = 0; i &lt; nums.length - 1 ; i++) &#123;</span><br><span class="line">            curDiff = nums[i+1] - nums[i];</span><br><span class="line">            //判断是否有波动</span><br><span class="line">            if (preDiff&gt;=0 &amp;&amp; curDiff&lt;0 || preDiff &lt;=0 &amp;&amp; curDiff&gt;0)&#123;</span><br><span class="line">                result++;</span><br><span class="line">            &#125;</span><br><span class="line">            preDiff = curDiff;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当前代码有问题</p>
+<p>情况3：单调坡中有平坡</p>
+<p><img src="/.com//work\notebook\source_posts\贪心算法\Snipaste_2024-04-02_12-24-34.png" alt="Snipaste_2024-04-02_12-24-34"></p>
+<p>摆动的长度是2</p>
+<p>如果继续使用上述代码会在2-&gt;3这个位置出问题，本来result不应该+1的</p>
+<p>原因：preDiff一直跟着CurDiff更新</p>
+<p>解决方法：preDiff只需要记录当摆动出现时，摆动的初始坡度，然后preDiff不改变直到下一个摆动的时候</p>
+<p>修改代码：把preDiff &#x3D; curDiff;放在if中即可避免情况3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin2 &#123;</span><br><span class="line"></span><br><span class="line">    int tanXin(int[] nums)&#123;</span><br><span class="line"></span><br><span class="line">        if (nums.length == 1)&#123;</span><br><span class="line">            return 1;</span><br><span class="line">        &#125;</span><br><span class="line">        int preDiff = 0;</span><br><span class="line">        int curDiff = 0;</span><br><span class="line">        //假设最右边有一个波动</span><br><span class="line">        int result = 1;</span><br><span class="line">        //遍历到倒数第二个</span><br><span class="line">        for (int i = 0; i &lt; nums.length - 1 ; i++) &#123;</span><br><span class="line">            curDiff = nums[i+1] - nums[i];</span><br><span class="line">            //判断是否有波动</span><br><span class="line">            if (preDiff&gt;=0 &amp;&amp; curDiff&lt;0 || preDiff &lt;=0 &amp;&amp; curDiff&gt;0)&#123;</span><br><span class="line">                result++;</span><br><span class="line">                preDiff = curDiff;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="最大子序和"><a href="#最大子序和" class="headerlink" title="最大子序和"></a>最大子序和</h3><p>[-2,1,-3,4,-1,2,1,-5,4]</p>
+<p>求这个序列的子序列的和的最大值？</p>
+<p>输出6</p>
+<p>局部最优：遇到当前的元素为止的<strong>连续和</strong>为负数，则选择下一个元素作为新的起点。（只要当前连续和不是负数，都有可能让后面的数变大）</p>
+<p>全局最优：在这个数组中找到最大连续子数组的和</p>
+<p>例：</p>
+<p>[-2,1,-3,4,-1,2,1,-5,4]</p>
+<p>-2  1  -2 4  3 5 6 1 5</p>
+<p>起始位置：3</p>
+<p>终止位置：6</p>
+<p>result &#x3D;1</p>
+<p>result &#x3D;4</p>
+<p>result &#x3D;5</p>
+<p>result &#x3D;6</p>
+<p>代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin3 &#123;</span><br><span class="line"></span><br><span class="line">    //最大子序和</span><br><span class="line">    int tanXin(int[] nums)&#123;</span><br><span class="line">        //存放最大和</span><br><span class="line">        int result = 0;</span><br><span class="line">        //存放元素相加连续和</span><br><span class="line">        int count = 0;</span><br><span class="line">        for (int i = 0; i &lt; nums.length; i++) &#123;</span><br><span class="line">            count += nums[i];</span><br><span class="line">            //如果出现比result值大的，则更新result</span><br><span class="line">            if (count &gt; result)&#123;</span><br><span class="line">                result = count;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            //如果出现连续和为负数，则更新下一个元素的位置为起始位置</span><br><span class="line">            if (count &lt;0)&#123;</span><br><span class="line">                count = 0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="买卖股票最佳时机2"><a href="#买卖股票最佳时机2" class="headerlink" title="买卖股票最佳时机2"></a>买卖股票最佳时机2</h3><p>price[7,1,5,10,3,6,4]</p>
+<p>问题：买卖股票多次，可以收获的最大利润是多少</p>
+<p>假设四天的买卖了p[3],p[2],p[1],p[0]</p>
+<p>利润为p[3]-p[2] + p[2] - p[1]+p[1] -p[0]</p>
+<p>为了让我们的总利润变大，每天的利润最好都为正（收集正的利润）</p>
+<p>例如：</p>
+<p>price[7,1,5,10,3,6,4]</p>
+<p>每天的利润：-6,4,5,-7,3,-2</p>
+<p>最大利润和为：4+5+3&#x3D;12</p>
+<p>局部最优：只收集每天的正利润</p>
+<p>全局最优: 收集到最大的利润</p>
+<p>注意：循环要从1开始，因为从第二天才能开始收集利润</p>
+<p>代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin4 &#123;</span><br><span class="line"></span><br><span class="line">    //买卖股票的最佳时机</span><br><span class="line">    int tanXin(int[] nums)&#123;</span><br><span class="line">        //存放最大和</span><br><span class="line">        int result = 0;</span><br><span class="line">        //存放元素相加连续和</span><br><span class="line">        for (int i = 1; i &lt; nums.length; i++) &#123;</span><br><span class="line">            result += Math.max(nums[i]-nums[i-1],0);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="跳跃游戏"><a href="#跳跃游戏" class="headerlink" title="跳跃游戏"></a>跳跃游戏</h3><p>[2,3,1,1,4]</p>
+<p>输出:true</p>
+<p>[3,2,1,0,4]</p>
+<p>输出:false</p>
+<p>题目描述:给一个数组，里面的元素表示最多可以往后跳几个元素，如果能跳跃到最后一个元素则返回true，否则返回false</p>
+<p>解题思路：看每个元素的覆盖范围</p>
+<p>例如：[2,3,1,1,4]</p>
+<p>​			——</p>
+<p>​				———</p>
+<p>如上图，只要能在覆盖范围内的元素都能跳到，如果包含最后一个元素，则为true</p>
+<p>如果只有一个元素，一定可以跳跃</p>
+<p>遍历的范围一定要在覆盖范围内移动，如果超出覆盖范围则无法到达，（i&lt;&#x3D;cover)</p>
+<p>每覆盖到一个元素，根据元素的大小去增加覆盖范围,并且覆盖范围要取最大的cover &#x3D; max(i+nums[i],cover);</p>
+<p>如果可以跳到重点则返回true，否则就是没到终点，返回false</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin5 &#123;</span><br><span class="line"></span><br><span class="line">    //跳跃游戏</span><br><span class="line">    boolean tanXin(int[] nums)&#123;</span><br><span class="line">        //当前元素的覆盖范围</span><br><span class="line">        int cover = 0;</span><br><span class="line">        for (int i = 0; i &lt;=cover; i++) &#123;</span><br><span class="line">            //更新为当前元素覆盖的最大值</span><br><span class="line">            cover += Math.max(i + nums[i],cover);</span><br><span class="line">            //如果到达终点</span><br><span class="line">            if (cover == nums.length - 1)&#123;</span><br><span class="line">                return true;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //没到到最后一个结点</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>局部最优:每遍历一个元素尽可能去增加它的覆盖范围</p>
+<p>全局最优：得到整个数组中最大的覆盖范围</p>
+<h3 id="跳跃游戏2"><a href="#跳跃游戏2" class="headerlink" title="跳跃游戏2"></a>跳跃游戏2</h3><p>题目：最少跳几步可以跳到终点位置</p>
+<p>例如:</p>
+<p>​	[2,3,1,1,4]</p>
+<p>​	输出:2(2-&gt;3-&gt;4)</p>
+<p>思考1：</p>
+<p>局部最优:每一步尽可能往远跳，减少 步数，但是本题不能用这个思想</p>
+<p>思考2：</p>
+<p>用上题的覆盖范围来思考，可以到达终点。</p>
+<p>所以综上：</p>
+<p>​	局部最优：用最少的步数去尽可能的增加范围，用最少的步数把终点给覆盖到。</p>
+<p>例如：	[2 ,3 ,1,1,4]</p>
+<p>​				———</p>
+<p>​					— —  —</p>
+<p>做法：</p>
+<p>先记录每一个元素最大的覆盖范围并进行移动，如果无法移动到终点位置，则启动下一个元素的最大覆盖范围。如果覆盖到终点，则得到步数。每增加一个覆盖范围，步数+1</p>
+<p>代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin6 &#123;</span><br><span class="line"></span><br><span class="line">    //跳跃游戏</span><br><span class="line">    int tanXin(int[] nums)&#123;</span><br><span class="line">        //如果只有一个元素</span><br><span class="line">        if (nums.length == 1)&#123;</span><br><span class="line">            return 0;</span><br><span class="line">        &#125;</span><br><span class="line">       //记录覆盖范围</span><br><span class="line">        int cover = 0;</span><br><span class="line">        //记录下一步最远的距离</span><br><span class="line">        int next = 0;</span><br><span class="line">        //记录步数</span><br><span class="line">        int result = 0;</span><br><span class="line">        //记录当前最远指针的位置</span><br><span class="line">        int cur = 0;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; nums.length; i++) &#123;</span><br><span class="line">            //记录当前最远距离</span><br><span class="line">            next = Math.max(i+nums[i],next);</span><br><span class="line">            //如果指针到达当前元素的最远距离</span><br><span class="line">            if (i == cur)&#123;</span><br><span class="line">                //判断是否到达终点</span><br><span class="line">                if (cur != nums.length - 1)&#123;</span><br><span class="line">                    result++;</span><br><span class="line">                    cur = next;</span><br><span class="line">                    //判断覆盖范围是否超过终点</span><br><span class="line">                    if (cur &gt;= nums.length - 1)&#123;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;else &#123;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        return  result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="k次取反后最大化的数组和"><a href="#k次取反后最大化的数组和" class="headerlink" title="k次取反后最大化的数组和"></a>k次取反后最大化的数组和</h3><p>[-3,-1,0,2] k&#x3D;5</p>
+<p>输出:6</p>
+<p>取k次取反后，要得到最大的数组和</p>
+<p>本题蕴含了两次贪心</p>
+<p>局部最优</p>
+<p>1.优先对数组中的负数进行取反，在负数中优先对绝对值最大的负数取反</p>
+<p>2.负数没了，但还剩下取反次数，选取正数当中的最小值把剩余的取反次数消耗掉。</p>
+<p>全局最优：得到最大的数组和</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin7 &#123;</span><br><span class="line"></span><br><span class="line">    //k次取反后最大化的数组和</span><br><span class="line"></span><br><span class="line">    int tanXin(int[] nums)&#123;</span><br><span class="line"></span><br><span class="line">        //先对数组进行排序</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        // 取反次数</span><br><span class="line">        int k =  10;</span><br><span class="line">        //最大结果</span><br><span class="line">        int result = 0;</span><br><span class="line">        //1.第一次贪心</span><br><span class="line">        for (int i = 0; i &lt;nums.length ; i++) &#123;</span><br><span class="line">            if (k &gt; 0 &amp;&amp; nums[i] &lt; 0)&#123;</span><br><span class="line">                nums[i] *= -1;</span><br><span class="line">                k--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //2.第二贪心</span><br><span class="line">        //如果剩余取反次数是奇数，则最小整数直接取反</span><br><span class="line">        if (k%2 == 1)&#123;</span><br><span class="line">            nums[nums.length-1] *= -1;</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = 0; i &lt; nums.length; i++) &#123;</span><br><span class="line"></span><br><span class="line">            result+=nums[i];</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="加油站"><a href="#加油站" class="headerlink" title="加油站"></a>加油站</h3><p>两个数组：</p>
+<p>下标：0 1 2 3 4</p>
+<p>​	gas: 2,5,2,3,5 (补充的油的单位)</p>
+<p>​	cos:1,2,8,2,4 （当前站开到下一站消耗油的单位）</p>
+<p>下标0开始：1 4 -2 （X）</p>
+<p>输出: -1</p>
+<p>下标3开始: 3 6 0 1 2(√)</p>
+<p>输出(下标)：3</p>
+<p>我们只能找到唯一一个起始位置跑完这一圈，如果找不到返回-1</p>
+<p>关键:到达每个站点后补充油和消耗油是否加油还是剩油</p>
+<p>下标：0 1 2 3 4</p>
+<p>​	gas: 2,5,2,3,5 (补充的油的单位)</p>
+<p>​	cos:1,2,8,2,4 （当前站开到下一站消耗油的单位）</p>
+<p>​			1 3 -6 1 1</p>
+<p>​					*(下标2耗油太多了)</p>
+<p>局部最优：curSum记录累加每个结点的剩余油量，如果为负，则该结点的下一个结点变成起始位置。</p>
+<p>全局最优：找到跑完一圈的终点位置</p>
+<p>代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin8 &#123;</span><br><span class="line"></span><br><span class="line">    //加油站</span><br><span class="line"></span><br><span class="line">    int tanXin(int[] gas, int[] cos)&#123;</span><br><span class="line"></span><br><span class="line">        //记录绕一圈后的剩余油量</span><br><span class="line">        int totalSum = 0;</span><br><span class="line">        //记录当前元素为止的连续和</span><br><span class="line">        int curSum = 0;</span><br><span class="line">        //记录起始位置</span><br><span class="line">        int startIndex = 0;</span><br><span class="line">        for (int i = 0; i &lt; gas.length; i++) &#123;</span><br><span class="line">            //经过每个站点的剩余油量</span><br><span class="line">            totalSum = gas[i] - cos[i];</span><br><span class="line">            //遍历到每个结点时油量和</span><br><span class="line">            curSum +=totalSum;</span><br><span class="line">            if (curSum &lt; 0)&#123;</span><br><span class="line">                startIndex = i+1;</span><br><span class="line">                curSum = 0;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //如果油量为负</span><br><span class="line">        if (totalSum &lt; 0)&#123;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line">        //返回起始位置</span><br><span class="line">        return startIndex;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h3 id="分发糖果"><a href="#分发糖果" class="headerlink" title="分发糖果"></a>分发糖果</h3><p>题目：如果得分比周围的小孩高则能拿到更多的糖果</p>
+<p>并且每个小孩至少有一个糖果</p>
+<p>得分：[1,0,5]</p>
+<p>得到的糖果数: 2 1 2</p>
+<p>输出：5</p>
+<p>得分：[1,2,2]</p>
+<p>得到的糖果数: 1 2 1</p>
+<p>输出: 4</p>
+<p>本题需要考虑两边的情况</p>
+<p>方法：先确定一边再确定另一边。</p>
+<p>情况1：右孩比左孩的得分高</p>
+<p>例如：[1,2,2,5,4,3,2]</p>
+<p>糖果数: 1 2 1 2 1 1 1</p>
+<p>if(roting[i] &gt; roting[i-1])  candy[i] &#x3D; candy[i-1] + 1;</p>
+<p>情况2: 左孩子比右孩子得分高（从后向前遍历，如果使用从前向后遍历是无法使用到情况1比较的结果的）</p>
+<p>例如：[1,2,2,5,4,3,2]</p>
+<p>糖果数: 1 2 1 2 1 1 1</p>
+<p>糖果数:  1 1 1 4 3 2 1</p>
+<p>if(roting[i+1] &lt; roting[i])  candy[i] &#x3D; candy[i+1] + 1;</p>
+<p>根据题意要既比左孩大，又比右孩大</p>
+<p>所以要在情况1和情况2中取最大值</p>
+<p>candy[i] &#x3D; max(情况1,情况2)</p>
+<p>例如：[1,2,2,5,4,3,2]</p>
+<p>糖果数: 1 2 1 2 1 1 1</p>
+<p>糖果数:  1 <strong>2</strong> 1 4 3 2 1</p>
+<p>最后得出的结果累加返回即可</p>
+<p>代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin9 &#123;</span><br><span class="line"></span><br><span class="line">    //分发糖果</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    List&lt;Integer&gt; candy( List&lt;Integer&gt; vector, int num)&#123;</span><br><span class="line">        List&lt;Integer&gt; nums = new ArrayList&lt;&gt;();</span><br><span class="line">        for (int i = 0; i &lt; vector.size(); i++) &#123;</span><br><span class="line">            nums.set(i,num);</span><br><span class="line">        &#125;</span><br><span class="line">        return nums;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    int tanXin(List&lt;Integer&gt; rating)&#123;</span><br><span class="line"></span><br><span class="line">        //当前孩子得到的糖果数字</span><br><span class="line">        int sum = 1;</span><br><span class="line">        //所有小孩默认获取1个糖果</span><br><span class="line">        List&lt;Integer&gt; nums = candy(rating,sum);</span><br><span class="line">        //先确定右孩大于左孩的情况</span><br><span class="line">        for (int i = 1; i &lt; rating.size() ; i++) &#123;</span><br><span class="line">            if (rating.get(i) &gt; rating.get(i-1))&#123;</span><br><span class="line">                //对于前一个孩子的糖果数+1</span><br><span class="line">                nums.set(i, nums.get(i-1)+1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //再确定左孩子大于右孩子的情况</span><br><span class="line">        for (int i = rating.size()-1; i &gt; 0 ; i--) &#123;</span><br><span class="line">            if (rating.get(i) &gt; rating.get(i+1) )&#123;</span><br><span class="line">                //再取两个情况的最大值,确定最终糖果数字</span><br><span class="line">                nums.set(i,Math.max(nums.get(i+1)+1,nums.get(i))) ;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        int result = 0;</span><br><span class="line">        for (int i = 0; i &lt; nums.size(); i++) &#123;</span><br><span class="line">            result+= nums.get(i);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="柠檬水找零"><a href="#柠檬水找零" class="headerlink" title="柠檬水找零"></a>柠檬水找零</h3><p>根据收到的钞票对客户找零</p>
+<p>bills:[5,5,5,10,20]</p>
+<p>输出：true</p>
+<p>bills:[10,10]</p>
+<p>输出:false</p>
+<p>情况1：收到5</p>
+<p>情况2：收到10，要拿5找零</p>
+<p>情况3：收到20</p>
+<p>​			10+5或者5+5+5</p>
+<p>局部最优：得到尽可能多的5</p>
+<p>全局最优：完成找零</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class tanXin10 &#123;</span><br><span class="line"></span><br><span class="line">    //柠檬水找零</span><br><span class="line">    boolean tanXin(int[] arr)&#123;</span><br><span class="line">        int five = 0;</span><br><span class="line">        int ten = 0;</span><br><span class="line">        int twenty = 0;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; arr.length; i++) &#123;</span><br><span class="line">            if (arr[i] == 5)&#123;</span><br><span class="line">                five++;</span><br><span class="line">            &#125;</span><br><span class="line">            if (arr[i] == 10)&#123;</span><br><span class="line">                if (five == 0)&#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">                five--;</span><br><span class="line">                ten++;</span><br><span class="line">            &#125;</span><br><span class="line">            if (arr[i] == 20)&#123;</span><br><span class="line">                if (ten &gt; 0 &amp;&amp; five &gt; 0 )&#123;</span><br><span class="line">                    ten--;</span><br><span class="line">                    five--;</span><br><span class="line">                    twenty++;</span><br><span class="line">                &#125;else if (five &gt;=3 )&#123;</span><br><span class="line">                    five -= 3;</span><br><span class="line">                    twenty++;</span><br><span class="line">                &#125;else &#123;</span><br><span class="line">                    return false;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+                </div>
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                    </div>
+                    <div>
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2024/04/02/%E9%9D%A2%E8%AF%95%E9%A2%98/"
+                                   title="面试题"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">面试题</span>
+                                        <span class="post-nav-item">Prev posts</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2024/03/29/%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95/"
+                                   title="算法"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">算法</span>
+                                        <span class="post-nav-item">Next posts</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="border-box website-info-box default">
+        
+            <div class="copyright-info info-item default">
+                &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
+                
+                    &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">Keep Team</a>
+                
+            </div>
+
+            <div class="theme-info info-item default">
+                Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+            </div>
+
+            
+
+            
+        
+
+        <div class="count-item info-item default">
+            
+
+            
+
+            
+        </div>
+    </div>
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="tools-list border-box">
+        <!-- PC TOC show toggle -->
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-toggle-theme-mode flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
+        
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+
+    <!-- tablet toc -->
+    
+</main>
+
+
+
+<!-- common -->
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/toggle-theme.js"></script>
+
+<script src="/js/code-block.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/libs/anime.min.js"></script>
+
+
+<!-- local-search -->
+
+
+<!-- lazyload -->
+
+
+<div class="">
+    
+        <!-- post-helper -->
+        
+<script src="/js/post/post-helper.js"></script>
+
+
+        <!-- toc -->
+        
+
+        <!-- copyright-info -->
+        
+
+        <!-- share -->
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+
+
+</body>
+</html>
