@@ -44,12 +44,74 @@
 
 
 <body>
-<div class="progress-bar-container">
-    
+.progress-bar-container {
+  position fixed
+  top 0
+  left 0
+  z-index $z-index-9
+  width 100%
 
-    
-</div>
+  if (hexo-config('pjax') && hexo-config('pjax.enable') == true) {
 
+    .pjax-progress-bar {
+      position absolute
+      top 0
+      left 0
+      z-index $z-index-8
+      width 0
+      height 2px
+      background var(--pjax-progress-bar-color)
+      visibility hidden
+      opacity 0
+      transition-t("width, opacity", "0, 0", "0.1, 0.1", "linear")
+
+
+      &.show {
+        visibility visible
+        opacity 1
+      }
+    }
+
+
+    .pjax-progress-icon {
+      position absolute
+      top 0.4rem
+      right 0.3rem
+      z-index $z-index-8
+      color var(--text-color-3)
+      font-size 1.1rem
+      visibility hidden
+
+      +keep-tablet() {
+        top 0.3rem
+        right 0.2rem
+        font-size 1rem
+      }
+
+      &.show {
+        visibility visible
+      }
+    }
+  }
+
+  if (hexo-config('scroll') && hexo-config('scroll.progress_bar') == true) {
+    .scroll-progress-bar {
+      position absolute
+      top 0
+      left 0
+      z-index $z-index-7
+      width 0
+      height var(--header-scroll-progress-bar-height)
+      background var(--primary-color)
+      visibility hidden
+      transition-t("width", "0", "0.1", "linear")
+
+      &.hide {
+        display none !important
+      }
+    }
+  }
+}
 
 
 <main class="page-container border-box">
@@ -59,81 +121,458 @@
     <!-- page content -->
     <div class="page-main-content border-box">
         <div class="page-main-content-top">
-            
-<header class="header-wrapper">
+            $pc-search-icon-font-size = 1.5rem
+$menu-bar-line-height = 2.5px
+$logo-image-box-width = 2.68rem
 
-    <div class="border-box header-content">
-        <div class="left border-box">
-            
-                <a class="logo-image border-box" href="/">
-                    <img src="/images/logo.svg">
-                </a>
-            
-            <a class="site-name border-box" href="/">
-               Keep Theme
-            </a>
-        </div>
+.header-wrapper {
+  display flex
+  align-items center
+  justify-content center
+  box-sizing border-box
+  width 100%
+  height 100%
+  padding-top var(--header-scroll-progress-bar-height)
+  background var(--background-color-1)
+  box-shadow 1px 2px 6px var(--shadow-color)
 
-        <div class="right border-box">
-            <div class="pc">
-                <ul class="menu-list">
-                    
-                        
-                        <li class="menu-item">
-                            <a class=""
-                               href="/"
-                            >
-                                
-                                HOME
-                            </a>
-                        </li>
-                    
-                        
-                        <li class="menu-item">
-                            <a class=""
-                               href="/archives"
-                            >
-                                
-                                ARCHIVES
-                            </a>
-                        </li>
-                    
-                    
-                </ul>
-            </div>
-            <div class="mobile">
-                
-                <div class="icon-item menu-bar">
-                    <div class="menu-bar-middle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+  &:hover {
+    box-shadow 1px 2px 10px var(--shadow-hover-color)
+  }
 
-    <div class="header-drawer">
-        <ul class="drawer-menu-list">
-            
-                
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/"
-                    >HOME</a>
-                </li>
-            
-                
-                <li class="drawer-menu-item flex-center">
-                    <a class=""
-                       href="/archives"
-                    >ARCHIVES</a>
-                </li>
-            
-        </ul>
-    </div>
+  .header-content {
+    z-index $z-index-5
+    display flex
+    flex-direction row
+    align-items center
+    justify-content space-between
+    width var(--page-content-width)
+    max-width var(--page-content-max-width)
+    height 100%
+    transition-t("max-width, width", "0, 0", "0.1, 0.1", "ease, ease")
 
-    <div class="window-mask"></div>
 
-</header>
+    &.has-first-screen {
+      max-width var(--page-content-max-width-2)
+    }
 
+
+    .has-toc & {
+      max-width var(--page-content-max-width-2)
+    }
+
+
+    +keep-tablet() {
+      width var(--page-content-width-tablet)
+    }
+
+
+    +keep-mobile() {
+      width var(--page-content-width-mobile)
+    }
+
+
+    .left {
+      display flex
+      align-items center
+      justify-content flex-start
+      height 100%
+      font-size 2rem
+
+      transition-t("transform, transform-origin", "0, 0", "0.2, 0.2", "linear, linear")
+
+      .header-shrink & {
+        transform scale(0.78)
+        transform-origin left
+      }
+
+
+      if (hexo-config('base_info') && hexo-config('base_info.logo')) {
+        .logo-image {
+          flex-shrink 0
+          width $logo-image-box-width
+          height $logo-image-box-width
+          margin-right 0.5rem
+
+
+          +keep-tablet() {
+            width $logo-image-box-width * 0.9
+            height $logo-image-box-width * 0.9
+          }
+
+
+          +keep-mobile() {
+            width $logo-image-box-width * 0.8
+            height $logo-image-box-width * 0.8
+          }
+
+
+          img {
+            width 100%
+            border-radius 0.4rem
+          }
+        }
+      }
+
+
+      .site-name {
+        color var(--text-color-1)
+        font-weight 600
+        font-size var(--header-title-font-size)
+        font-family var(--header-title-font-family)
+        line-height 1
+        letter-spacing 1px
+
+        +keep-tablet() {
+          font-size calc(var(--header-title-font-size) * 0.9)
+        }
+
+        +keep-mobile() {
+          font-size calc(var(--header-title-font-size) * 0.8)
+        }
+
+        .is-home & {
+          if (hexo-config('first_screen') && hexo-config('first_screen.enable') == true) {
+            color var(--first-screen-header-font-color-light)
+            filter brightness(92%)
+
+            .dark-mode & {
+              color var(--first-screen-header-font-color-dark)
+              filter brightness(106%)
+            }
+          }
+        }
+
+        .show-header-drawer & {
+          color var(--text-color-1) !important
+        }
+      }
+    }
+
+
+    .right {
+      .pc {
+        .menu-list {
+          display flex
+          align-items center
+
+          +keep-tablet() {
+            display none
+          }
+
+
+          .menu-item {
+            position relative
+            float left
+            box-sizing border-box
+            margin-left 2rem
+            font-size 1rem
+            cursor pointer
+
+            &:first-child {
+              margin-left 0
+            }
+
+
+            a {
+              &::before {
+                position absolute
+                bottom -10px
+                left 50%
+                box-sizing border-box
+                width 0
+                height 2.6px
+                background var(--primary-color)
+                border-radius 3px
+                transform translateX(-50%)
+                content ''
+                transition-t("transform, bottom, width", "0, 0, 0", "0.2, 0.2, 0.2", "linear, linear, ease")
+
+                .header-shrink & {
+                  bottom calc(-1 * calc(var(--header-shrink-height) * 0.5 - 12px))
+                }
+              }
+
+
+              &:hover
+              &.active {
+                &::before {
+                  width 100%
+                }
+              }
+            }
+
+
+            &.search {
+              margin-left 1.6rem
+              font-size $pc-search-icon-font-size
+
+              i {
+                color var(--text-color-3)
+              }
+            }
+
+
+            .menu-icon {
+              display var(--header-menu-icon)
+              margin-right 0.1rem
+            }
+
+            .is-home & {
+              if (hexo-config('first_screen') && hexo-config('first_screen.enable') == true) {
+                a {
+                  color var(--first-screen-header-font-color-light)
+
+                  .menu-icon {
+                    color var(--first-screen-header-font-color-light)
+                  }
+
+                  &:hover {
+                    color var(--primary-color)
+
+                    .menu-icon {
+                      color var(--primary-color)
+                    }
+                  }
+                }
+
+
+                i.search {
+                  color var(--first-screen-header-font-color-light)
+                }
+
+
+                .dark-mode & {
+                  a {
+                    color var(--first-screen-header-font-color-dark)
+
+                    .menu-icon {
+                      color var(--first-screen-header-font-color-dark)
+                    }
+
+                    &:hover {
+                      color var(--primary-color)
+
+                      .menu-icon {
+                        color var(--primary-color)
+                      }
+                    }
+                  }
+
+                  i.search {
+                    color var(--first-screen-header-font-color-dark)
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+
+      .mobile {
+        display flex
+        align-items center
+        justify-content space-between
+
+        .icon-item {
+          position relative
+          display none
+          width 20px
+          height 20px
+          margin-left 12px
+          color var(--text-color-3)
+          font-size 18px
+          cursor pointer
+
+          i {
+            color var(--text-color-3)
+
+            .show-header-drawer & {
+              color var(--text-color-3) !important
+            }
+
+            .reset-color & {
+              color var(--text-color-3) !important
+            }
+          }
+
+          &:first-child {
+            margin-left 0
+          }
+
+          +keep-tablet() {
+            display flex
+            align-items center
+            justify-content center
+          }
+        }
+
+
+        .menu-bar {
+          .menu-bar-middle {
+            position relative
+            width 18px
+            height $menu-bar-line-height
+            background var(--text-color-3)
+
+            &::before
+            &::after {
+              position absolute
+              left 0
+              width 100%
+              height $menu-bar-line-height
+              background var(--text-color-3)
+              content ''
+              transition-t("transform", "0", "0.38", "ease")
+            }
+
+
+            &::before {
+              top -6px
+
+              .show-header-drawer & {
+                transform translateY(6px) rotate(45deg)
+              }
+            }
+
+
+            &::after {
+              bottom -6px
+
+              .show-header-drawer & {
+                transform translateY(-6px) rotate(-45deg)
+              }
+            }
+
+
+            .reset-color & {
+              background var(--text-color-3) !important
+
+              &::before
+              &::after {
+                background var(--text-color-3) !important
+              }
+            }
+
+
+            .show-header-drawer & {
+              background transparent !important
+
+              &::before
+              &::after {
+                background var(--text-color-3) !important
+              }
+            }
+          }
+        }
+
+        .is-home & {
+          if (hexo-config('first_screen') && hexo-config('first_screen.enable') == true) {
+            .icon-item i {
+              color var(--first-screen-header-font-color-light)
+            }
+
+            .menu-bar .menu-bar-middle {
+              background var(--first-screen-header-font-color-light)
+
+              &::before
+              &::after {
+                background var(--first-screen-header-font-color-light)
+              }
+            }
+
+            .dark-mode & {
+              .icon-item i {
+                color var(--first-screen-header-font-color-dark)
+              }
+
+              .menu-bar .menu-bar-middle {
+                background var(--first-screen-header-font-color-dark)
+
+                &::before
+                &::after {
+                  background var(--first-screen-header-font-color-dark)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+
+  .header-drawer {
+    position absolute
+    top 0
+    left 0
+    z-index $z-index-2
+    width 100%
+    padding var(--header-height) 0 20px 0
+    background var(--background-color-1)
+    transform scaleY(0)
+    transform-origin top
+    transition-t("transform", "0", "0.38", "ease")
+
+    .show-header-drawer & {
+      transform scaleY(1)
+    }
+
+    .drawer-menu-list {
+      display flex
+      flex-direction column
+      align-items center
+      justify-content flex-start
+
+      .drawer-menu-item {
+        height 38px
+        margin 6px 0
+        font-size 1rem
+
+        a {
+          padding 6px 20px
+          color var(--text-color-3)
+          border-radius 20px
+
+          &:hover {
+            color var(--text-color-2)
+            border 1px solid var(--text-color-3)
+          }
+
+
+          &.active {
+            color var(--text-color-2)
+            border 1px solid var(--text-color-3)
+          }
+        }
+      }
+    }
+  }
+
+
+  .window-mask {
+    position absolute
+    top 0
+    z-index $z-index-1
+    width 100%
+    height 100vh
+    background rgba(0, 0, 0, 0.4)
+    visibility hidden
+    opacity 0
+    transition-t("transform, opacity", "0, 0", "0.38, 0.38", "ease, ease")
+
+    .show-header-drawer & {
+      visibility visible
+      opacity 1
+    }
+  }
+}
+
+
+.show-header-drawer {
+  overflow hidden
+}
 
         </div>
 
@@ -142,464 +581,456 @@
             <div class="main-content border-box">
                 
 
-                    
-<div class="fade-in-down-animation">
-    <div class="post-page-container border-box">
-        <div class="post-content-container border-box">
-            
-
-            <div class="post-content-bottom border-box">
-                
-                    <div class="post-title">
-                        聚合搜索
-                    </div>
-                
-
-                
-                    <div class="post-header border-box">
-                        
-                            <div class="avatar-box border-box">
-                                <img src="/images/avatar.svg">
-                            </div>
-                        
-                        <div class="info-box">
-                            <div class="author border-box">
-                                <span class="name">Keep Team</span>
-                                
-                                    <span class="author-badge">Lv1</span>
-                                
-                            </div>
-                            <div class="meta-info border-box">
-                                
-
-<div class="post-meta-info-container border-box post">
-    <div class="post-meta-info border-box">
-        
-
-        
-            <span class="meta-info-item post-create-date">
-                <i class="icon fa-solid fa-calendar-plus"></i>&nbsp;
-                <span class="datetime">2024-07-17 04:50:49</span>
-            </span>
-
-            <span class="meta-info-item post-update-date">
-                <i class="icon fa-solid fa-file-pen"></i>&nbsp;
-                <span class="datetime" data-updated="Wed Jul 17 2024 04:53:18 GMT+0800">2024-07-17 04:53:18</span>
-            </span>
-        
-
-        
-
-        
-            <span class="post-tag meta-info-item border-box">
-                <ul class="post-tag-ul">
-                    
-                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Java-ES-%E9%97%A8%E9%9D%A2%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-%E7%88%AC%E8%99%AB/">Java ES 门面模式 适配器模式 爬虫</a></li>
-                        
-                    
-                </ul>
-            </span>
-        
-
-        
-        
-        
-        
-    </div>
-
-    
-</div>
-
-                            </div>
-                        </div>
-                    </div>
-                
-
-                <div class="post-content keep-markdown-body ">
-                    
-
-                    
-                         <h3 id="聚合搜索"><a href="#聚合搜索" class="headerlink" title="聚合搜索"></a>聚合搜索</h3><p>如何让前端能一次搜出所有的数据，又能分别搜出某一类的数据？</p>
-<p>在现有接口的基础上再添加参数，前端传不同的type的数据来获取不同的参数。</p>
-<p>前端的type是什么值就传什么数据</p>
-<p>企业开发：如果在企业当中一个接口的很多功能都差不多，可以考虑添加一个参数来区分前端需要的数据，而不用再重新建一个新的接口。</p>
-<p> 1.给SearchRequest加一个参数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 查询请求</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">@EqualsAndHashCode(callSuper = true)</span><br><span class="line">@Data</span><br><span class="line">public class SearchRequest extends PageRequest implements Serializable &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 搜索词</span><br><span class="line">     */</span><br><span class="line">    private String searchText;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 用于区分前端需要的数据类型</span><br><span class="line">     */</span><br><span class="line">    private String type;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>2.创建前端参数类型枚举</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 搜索类型枚举</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public enum SearchTypeEnum &#123;</span><br><span class="line"></span><br><span class="line">    POST(&quot;帖子&quot;, &quot;post&quot;),</span><br><span class="line">    USER(&quot;用户&quot;, &quot;user&quot;),</span><br><span class="line">    PICTURE(&quot;图片&quot;, &quot;picture&quot;);</span><br><span class="line"></span><br><span class="line">    private final String text;</span><br><span class="line"></span><br><span class="line">    private final String value;</span><br><span class="line"></span><br><span class="line">    SearchTypeEnum(String text, String value) &#123;</span><br><span class="line">        this.text = text;</span><br><span class="line">        this.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取值列表</span><br><span class="line">     * 便于根据字符串去获取对应的枚举类</span><br><span class="line">     *</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static List&lt;String&gt; getValues() &#123;</span><br><span class="line">        return Arrays.stream(values()).map(item -&gt; item.value).collect(Collectors.toList());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 根据 value 获取枚举</span><br><span class="line">     *</span><br><span class="line">     * @param value</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public static SearchTypeEnum getEnumByValue(String value) &#123;</span><br><span class="line">        if (ObjectUtils.isEmpty(value)) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        for (SearchTypeEnum anEnum : SearchTypeEnum.values()) &#123;</span><br><span class="line">            if (anEnum.value.equals(value)) &#123;</span><br><span class="line">                return anEnum;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getValue() &#123;</span><br><span class="line">        return value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getText() &#123;</span><br><span class="line">        return text;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>3.新增SearchController的业务</p>
-<p>​	1.判断search是否合法</p>
-<p>​		如果type为空，那么搜索所有的数据</p>
-<p>​		如果type不为空</p>
-<p>​			a.如果type合法，那么查出对应的数据</p>
-<p>​			b.否则报错</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 图片接口</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/search&quot;)</span><br><span class="line">@Slf4j</span><br><span class="line">public class SearchController &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private UserService userService;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private PostService postService;</span><br><span class="line"></span><br><span class="line">    //注入</span><br><span class="line">    @Resource</span><br><span class="line">    private PictureService pictureService;</span><br><span class="line"></span><br><span class="line">    @PostMapping(&quot;/all&quot;)</span><br><span class="line">    public BaseResponse&lt;SearchVO&gt; searchALL(@RequestBody SearchRequest searchRequest, HttpServletRequest request)&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        String type = searchRequest.getType();</span><br><span class="line">        //判断取出的type值中是否有对应的参数类型</span><br><span class="line">        SearchTypeEnum searchTypeEnum = SearchTypeEnum.getEnumByValue(type);</span><br><span class="line">        ThrowUtils.throwIf(StringUtils.isBlank(type),ErrorCode.PARAMS_ERROR);</span><br><span class="line">        String searchText = searchRequest.getSearchText();</span><br><span class="line">        //如果为空则输出所有数据</span><br><span class="line">        if (searchTypeEnum == null)&#123;</span><br><span class="line">//异步将所有前端的请求进行封装</span><br><span class="line">            CompletableFuture&lt;Page&lt;UserVO&gt;&gt; userTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                userQueryRequest.setUserName(searchText);</span><br><span class="line">                Page&lt;UserVO&gt; userVOPage = userService.listUserVoByPage(userQueryRequest);</span><br><span class="line">                return userVOPage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            CompletableFuture&lt;Page&lt;PostVO&gt;&gt; postTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                PostQueryRequest postQueryRequest = new PostQueryRequest();</span><br><span class="line">                postQueryRequest.setSearchText(searchText);</span><br><span class="line">                Page&lt;PostVO&gt; postVOPage = postService.listPostVOByPage(postQueryRequest,request);</span><br><span class="line">                return postVOPage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            CompletableFuture&lt;Page&lt;Picture&gt;&gt; pictureTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                userQueryRequest.setUserName(searchText);</span><br><span class="line">                Page&lt;Picture&gt; picturePage = pictureService.searchPicture(searchText,1,10);</span><br><span class="line">                return picturePage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            try&#123;</span><br><span class="line">                //将所有的任务装在一起后才能继续往下执行</span><br><span class="line">                CompletableFuture.allOf(userTask,postTask,pictureTask).join();</span><br><span class="line"></span><br><span class="line">                Page&lt;UserVO&gt; userVOPage = userTask.get();</span><br><span class="line">                Page&lt;PostVO&gt; postVOPage = postTask.get();</span><br><span class="line">                Page&lt;Picture&gt; picturePage = pictureTask.get();</span><br><span class="line">                SearchVO searchVO = new SearchVO();</span><br><span class="line">                searchVO.setUserList(userVOPage.getRecords());</span><br><span class="line">                searchVO.setPostList(postVOPage.getRecords());</span><br><span class="line">                searchVO.setPictureList(picturePage.getRecords());</span><br><span class="line">                return ResultUtils.success(searchVO);</span><br><span class="line">            &#125;catch (Exception e)&#123;</span><br><span class="line">                log.error(&quot;查询异常&quot;,e);</span><br><span class="line">                throw new BusinessException(ErrorCode.SYSTEM_ERROR,&quot;查询异常&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            //如果不为空</span><br><span class="line">            SearchVO searchVO = new SearchVO();</span><br><span class="line">            switch (searchTypeEnum) &#123;</span><br><span class="line">                case POST:</span><br><span class="line">                    PostQueryRequest postQueryRequest = new PostQueryRequest();</span><br><span class="line">                    postQueryRequest.setSearchText(searchText);</span><br><span class="line">                    Page&lt;PostVO&gt; postVOPage = postService.listPostVOByPage(postQueryRequest, request);</span><br><span class="line">                    searchVO.setPostList(postVOPage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">                case USER:</span><br><span class="line">                    UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                    userQueryRequest.setUserName(searchText);</span><br><span class="line">                    Page&lt;UserVO&gt; userVOPage = userService.listUserVoByPage(userQueryRequest);</span><br><span class="line">                    searchVO.setUserList(userVOPage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">                case PICTURE:</span><br><span class="line">                    Page&lt;Picture&gt; picturePage = pictureService.searchPicture(searchText, 1, 10);</span><br><span class="line">                    searchVO.setPictureList(picturePage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            return ResultUtils.success(searchVO);</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>思考：上述代码还有什么问题？</p>
-<p>Statistic插件</p>
-<p>问题：type增多后，要把查询逻辑堆积controller里</p>
-<p>解决：</p>
-<p>1.可以使用策略模式（干掉if-else）</p>
-<h3 id="本质：如何让系统增加更多的数据源"><a href="#本质：如何让系统增加更多的数据源" class="headerlink" title="本质：如何让系统增加更多的数据源"></a>本质：如何让系统增加更多的数据源</h3><h4 id="门面模式"><a href="#门面模式" class="headerlink" title="门面模式"></a>门面模式</h4><p>前台（门面）帮助我们用户（客户端（要发送请求））去更轻松地实现功能，不需要关心门面背后的细节</p>
-<p>其实已经实现：</p>
-<p>前端不知道后端处理用户列表，图片，文章列表的接口在哪里，因为都放在一个接口上去发送请求给前端，前端只需要用一个type字段去得到对应的数据即可，不需要根据type类型去找接口。<strong>即前端不用关心后端从哪里，怎么取不同来源、聚合不同来源的数据，更方便的获取内容。</strong></p>
-<p>基本上所有聚合类业务都是门面模式（@slf4j也用到了门面模式）。</p>
-<p>上述代码不够优雅，用门面模式抽取类</p>
-<p>不在Controller里的代码不用BaseResponse</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br></pre></td><td class="code"><pre><span class="line">package com.yupi.springbootinit.manager;</span><br><span class="line"></span><br><span class="line">import com.baomidou.mybatisplus.extension.plugins.pagination.Page;</span><br><span class="line">import com.yupi.springbootinit.common.BaseResponse;</span><br><span class="line">import com.yupi.springbootinit.common.ErrorCode;</span><br><span class="line">import com.yupi.springbootinit.common.ResultUtils;</span><br><span class="line">import com.yupi.springbootinit.exception.BusinessException;</span><br><span class="line">import com.yupi.springbootinit.exception.ThrowUtils;</span><br><span class="line">import com.yupi.springbootinit.model.dto.post.PostQueryRequest;</span><br><span class="line">import com.yupi.springbootinit.model.dto.search.SearchRequest;</span><br><span class="line">import com.yupi.springbootinit.model.dto.user.UserQueryRequest;</span><br><span class="line">import com.yupi.springbootinit.model.entity.Picture;</span><br><span class="line">import com.yupi.springbootinit.model.enums.SearchTypeEnum;</span><br><span class="line">import com.yupi.springbootinit.model.vo.PostVO;</span><br><span class="line">import com.yupi.springbootinit.model.vo.SearchVO;</span><br><span class="line">import com.yupi.springbootinit.model.vo.UserVO;</span><br><span class="line">import com.yupi.springbootinit.service.PictureService;</span><br><span class="line">import com.yupi.springbootinit.service.PostService;</span><br><span class="line">import com.yupi.springbootinit.service.UserService;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.apache.commons.lang3.StringUtils;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import org.springframework.web.bind.annotation.PostMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestBody;</span><br><span class="line"></span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import java.util.concurrent.CompletableFuture;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 搜索门面</span><br><span class="line"> */</span><br><span class="line">@Component</span><br><span class="line">@Slf4j</span><br><span class="line">public class SearchFacade &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private UserService userService;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private PostService postService;</span><br><span class="line"></span><br><span class="line">    //注入</span><br><span class="line">    @Resource</span><br><span class="line">    private PictureService pictureService;</span><br><span class="line"></span><br><span class="line">    @PostMapping(&quot;/all&quot;)</span><br><span class="line">    public SearchVO searchALL(@RequestBody SearchRequest searchRequest, HttpServletRequest request)&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        String type = searchRequest.getType();</span><br><span class="line">        //判断取出的type值中是否有对应的参数类型</span><br><span class="line">        SearchTypeEnum searchTypeEnum = SearchTypeEnum.getEnumByValue(type);</span><br><span class="line">        ThrowUtils.throwIf(StringUtils.isBlank(type), ErrorCode.PARAMS_ERROR);</span><br><span class="line">        String searchText = searchRequest.getSearchText();</span><br><span class="line">        //如果为空则输出所有数据</span><br><span class="line">        if (searchTypeEnum == null)&#123;</span><br><span class="line">            //同步将所有前端的请求进行封装</span><br><span class="line">//        Page&lt;Picture&gt; picturePage = pictureService.searchPicture(searchText, 1, 10);</span><br><span class="line">//</span><br><span class="line">//        UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">//        userQueryRequest.setUserName(searchText);</span><br><span class="line">//        Page&lt;UserVO&gt; userVOPage = userService.listUserVoByPage(userQueryRequest);</span><br><span class="line">//        PostQueryRequest postQueryRequest = new PostQueryRequest();</span><br><span class="line">//        postQueryRequest.setSearchText(searchText);</span><br><span class="line">//        Page&lt;PostVO&gt; postVOPage = postService.listPostVOByPage(postQueryRequest, request);</span><br><span class="line">//</span><br><span class="line">//        SearchVO searchVO = new SearchVO();</span><br><span class="line">//        searchVO.setUserList(userVOPage.getRecords());</span><br><span class="line">//        searchVO.setPostList(postVOPage.getRecords());</span><br><span class="line">//        searchVO.setPictureList(picturePage.getRecords());</span><br><span class="line"></span><br><span class="line">            //异步将所有前端的请求进行封装</span><br><span class="line">            CompletableFuture&lt;Page&lt;UserVO&gt;&gt; userTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                userQueryRequest.setUserName(searchText);</span><br><span class="line">                Page&lt;UserVO&gt; userVOPage = userService.listUserVoByPage(userQueryRequest);</span><br><span class="line">                return userVOPage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            CompletableFuture&lt;Page&lt;PostVO&gt;&gt; postTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                PostQueryRequest postQueryRequest = new PostQueryRequest();</span><br><span class="line">                postQueryRequest.setSearchText(searchText);</span><br><span class="line">                Page&lt;PostVO&gt; postVOPage = postService.listPostVOByPage(postQueryRequest,request);</span><br><span class="line">                return postVOPage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            CompletableFuture&lt;Page&lt;Picture&gt;&gt; pictureTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                userQueryRequest.setUserName(searchText);</span><br><span class="line">                Page&lt;Picture&gt; picturePage = pictureService.searchPicture(searchText,1,10);</span><br><span class="line">                return picturePage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            try&#123;</span><br><span class="line">                //将所有的任务装在一起后才能继续往下执行</span><br><span class="line">                CompletableFuture.allOf(userTask,postTask,pictureTask).join();</span><br><span class="line"></span><br><span class="line">                Page&lt;UserVO&gt; userVOPage = userTask.get();</span><br><span class="line">                Page&lt;PostVO&gt; postVOPage = postTask.get();</span><br><span class="line">                Page&lt;Picture&gt; picturePage = pictureTask.get();</span><br><span class="line">                SearchVO searchVO = new SearchVO();</span><br><span class="line">                searchVO.setUserList(userVOPage.getRecords());</span><br><span class="line">                searchVO.setPostList(postVOPage.getRecords());</span><br><span class="line">                searchVO.setPictureList(picturePage.getRecords());</span><br><span class="line">                return searchVO;</span><br><span class="line">            &#125;catch (Exception e)&#123;</span><br><span class="line">                log.error(&quot;查询异常&quot;,e);</span><br><span class="line">                throw new BusinessException(ErrorCode.SYSTEM_ERROR,&quot;查询异常&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            //如果不为空</span><br><span class="line">            SearchVO searchVO = new SearchVO();</span><br><span class="line">            switch (searchTypeEnum) &#123;</span><br><span class="line">                case POST:</span><br><span class="line">                    PostQueryRequest postQueryRequest = new PostQueryRequest();</span><br><span class="line">                    postQueryRequest.setSearchText(searchText);</span><br><span class="line">                    Page&lt;PostVO&gt; postVOPage = postService.listPostVOByPage(postQueryRequest, request);</span><br><span class="line">                    searchVO.setPostList(postVOPage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">                case USER:</span><br><span class="line">                    UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                    userQueryRequest.setUserName(searchText);</span><br><span class="line">                    Page&lt;UserVO&gt; userVOPage = userService.listUserVoByPage(userQueryRequest);</span><br><span class="line">                    searchVO.setUserList(userVOPage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">                case PICTURE:</span><br><span class="line">                    Page&lt;Picture&gt; picturePage = pictureService.searchPicture(searchText, 1, 10);</span><br><span class="line">                    searchVO.setPictureList(picturePage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">            &#125;</span><br><span class="line">            return searchVO;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">package com.yupi.springbootinit.controller;</span><br><span class="line"></span><br><span class="line">import com.baomidou.mybatisplus.extension.plugins.pagination.Page;</span><br><span class="line">import com.yupi.springbootinit.common.BaseResponse;</span><br><span class="line">import com.yupi.springbootinit.common.ErrorCode;</span><br><span class="line">import com.yupi.springbootinit.common.ResultUtils;</span><br><span class="line">import com.yupi.springbootinit.exception.BusinessException;</span><br><span class="line">import com.yupi.springbootinit.exception.ThrowUtils;</span><br><span class="line">import com.yupi.springbootinit.manager.SearchFacade;</span><br><span class="line">import com.yupi.springbootinit.model.dto.post.PostQueryRequest;</span><br><span class="line">import com.yupi.springbootinit.model.dto.search.SearchRequest;</span><br><span class="line">import com.yupi.springbootinit.model.dto.user.UserQueryRequest;</span><br><span class="line">import com.yupi.springbootinit.model.entity.Picture;</span><br><span class="line">import com.yupi.springbootinit.model.enums.SearchTypeEnum;</span><br><span class="line">import com.yupi.springbootinit.model.vo.PostVO;</span><br><span class="line">import com.yupi.springbootinit.model.vo.SearchVO;</span><br><span class="line">import com.yupi.springbootinit.model.vo.UserVO;</span><br><span class="line">import com.yupi.springbootinit.service.PictureService;</span><br><span class="line">import com.yupi.springbootinit.service.PostService;</span><br><span class="line">import com.yupi.springbootinit.service.UserService;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.apache.commons.lang3.StringUtils;</span><br><span class="line">import org.springframework.web.bind.annotation.PostMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestBody;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line">import javax.annotation.Resource;</span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.concurrent.CompletableFuture;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 图片接口</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">@RestController</span><br><span class="line">@RequestMapping(&quot;/search&quot;)</span><br><span class="line">@Slf4j</span><br><span class="line">public class SearchController &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private UserService userService;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private PostService postService;</span><br><span class="line"></span><br><span class="line">    //注入</span><br><span class="line">    @Resource</span><br><span class="line">    private PictureService pictureService;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private SearchFacade searchFacade;</span><br><span class="line">    </span><br><span class="line">    @PostMapping(&quot;/all&quot;)</span><br><span class="line">    public BaseResponse&lt;SearchVO&gt; searchALL(@RequestBody SearchRequest searchRequest, HttpServletRequest request)&#123;</span><br><span class="line"></span><br><span class="line">        return  ResultUtils.success(searchFacade.searchALL(searchRequest,request));</span><br><span class="line">       </span><br><span class="line">    &#125;</span><br><span class="line">    // endregion</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p><img   src="F:\迅雷下载\work\notebook\source_posts\聚合搜索\Snipaste_2024-04-29_20-38-39.png"  alt="Snipaste_2024-04-29_20-38-39"></p>
-<p>应用场景：当调用你系统（接口）的客户端觉得麻烦的时候，就应该思考，是不是可以抽象成一个门面了。</p>
-<h4 id="适配器模式"><a href="#适配器模式" class="headerlink" title="适配器模式"></a>适配器模式</h4><p>1.定制统一的数据源接入规范：什么数据源允许接入？你的数据源接入时要满足什么要求？要做什么事情？</p>
-<p>用户接入我们的系统时，给的数据可能是不规范的</p>
-<p><strong>任何接入系统的数据，它必须能够根据关键词搜索，并且支持分页搜索</strong>。为了防止出现破坏系统的行为</p>
-<p>思考要其它用户接入我们系统时的行为</p>
-<p>1.添加枚举类型</p>
-<p>2.新建service</p>
-<p>3.再来到门面模式设置if-else</p>
-<p>通过声明接口来定义规范。</p>
-<p>步骤</p>
-<p>1.在dataSource声明接口</p>
-<p>2.把三个的服务实现类（给前端返回的数据列表）复制改造成三个数据源（为了方便其它人调用，最好是从服务实现类抽离出来）</p>
-<p>3.假如说我们的数据源已经支持了搜索，但是原有的方法参数和我们的规范不一致，怎么办？</p>
-<p>适配器作用：通过转换，让两个系统能够完成对接</p>
-<p>举例：玩ps5游戏机你要用ps5手柄，但是你只有NS手柄，那么你就需要用转接器去插入PS5，然后再把手柄线插入转接器。而这个转接器就是适配器。</p>
-<p>写代码：在继承接口的方法中，先创建一个可以适配转接器的对象，然后把需要的值放入对象中，然后返回给转接器（继承接口的方法）即可。简单来说就是更改了返回值类型。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 用户服务实现</span><br><span class="line"> *</span><br><span class="line"> * @author &lt;a href=&quot;https://github.com/liyupi&quot;&gt;程序员鱼皮&lt;/a&gt;</span><br><span class="line"> * @from &lt;a href=&quot;https://yupi.icu&quot;&gt;编程导航知识星球&lt;/a&gt;</span><br><span class="line"> */</span><br><span class="line">@Service</span><br><span class="line">@Slf4j</span><br><span class="line">public class UserDataSource implements DataSource&lt;UserVO&gt; &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private UserService userService;</span><br><span class="line">    </span><br><span class="line">    //适配器模式：修改返回值类型</span><br><span class="line">    @Override</span><br><span class="line">    public Page&lt;UserVO&gt; doSearch(String searchText, long pageNum, long pageSize) &#123;</span><br><span class="line">        UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">        userQueryRequest.setUserName(searchText);</span><br><span class="line">        userQueryRequest.setCurrent(pageNum);</span><br><span class="line">        userQueryRequest.setPageSize(pageSize);</span><br><span class="line">        Page&lt;UserVO&gt; userVOPage = userService.listUserVoByPage(userQueryRequest);</span><br><span class="line">        return userVOPage; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>4.改造门面模式</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 搜索门面</span><br><span class="line"> */</span><br><span class="line">@Component</span><br><span class="line">@Slf4j</span><br><span class="line">public class SearchFacade &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private PostDataSource postDataSource;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private UserDataSource userDataSource;</span><br><span class="line"></span><br><span class="line">    //注入</span><br><span class="line">    @Resource</span><br><span class="line">    private PictureDataSource pictureDataSource;</span><br><span class="line"></span><br><span class="line">    @PostMapping(&quot;/all&quot;)</span><br><span class="line">    public SearchVO searchALL(@RequestBody SearchRequest searchRequest, HttpServletRequest request)&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        String type = searchRequest.getType();</span><br><span class="line">        //判断取出的type值中是否有对应的参数类型</span><br><span class="line">        SearchTypeEnum searchTypeEnum = SearchTypeEnum.getEnumByValue(type);</span><br><span class="line">        ThrowUtils.throwIf(StringUtils.isBlank(type), ErrorCode.PARAMS_ERROR);</span><br><span class="line">        String searchText = searchRequest.getSearchText();</span><br><span class="line">        int current = searchRequest.getCurrent();</span><br><span class="line">        int pageSize = searchRequest.getPageSize();</span><br><span class="line"></span><br><span class="line">        //如果为空则输出所有数据</span><br><span class="line">        if (searchTypeEnum == null)&#123;</span><br><span class="line"></span><br><span class="line">            //异步将所有前端的请求进行封装</span><br><span class="line">            CompletableFuture&lt;Page&lt;UserVO&gt;&gt; userTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                userQueryRequest.setUserName(searchText);</span><br><span class="line">                Page&lt;UserVO&gt; userVOPage = userDataSource.doSearch(searchText,current,pageSize);</span><br><span class="line">                return userVOPage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            CompletableFuture&lt;Page&lt;PostVO&gt;&gt; postTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                PostQueryRequest postQueryRequest = new PostQueryRequest();</span><br><span class="line">                postQueryRequest.setSearchText(searchText);</span><br><span class="line">                Page&lt;PostVO&gt; postVOPage = postDataSource.doSearch(searchText,current,pageSize);</span><br><span class="line">                return postVOPage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            CompletableFuture&lt;Page&lt;Picture&gt;&gt; pictureTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                userQueryRequest.setUserName(searchText);</span><br><span class="line">                Page&lt;Picture&gt; picturePage = pictureDataSource.doSearch(searchText,current,pageSize);</span><br><span class="line">                return picturePage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            try&#123;</span><br><span class="line">                //将所有的任务装在一起后才能继续往下执行</span><br><span class="line">                CompletableFuture.allOf(userTask,postTask,pictureTask).join();</span><br><span class="line"></span><br><span class="line">                Page&lt;UserVO&gt; userVOPage = userTask.get();</span><br><span class="line">                Page&lt;PostVO&gt; postVOPage = postTask.get();</span><br><span class="line">                Page&lt;Picture&gt; picturePage = pictureTask.get();</span><br><span class="line">                SearchVO searchVO = new SearchVO();</span><br><span class="line">                searchVO.setUserList(userVOPage.getRecords());</span><br><span class="line">                searchVO.setPostList(postVOPage.getRecords());</span><br><span class="line">                searchVO.setPictureList(picturePage.getRecords());</span><br><span class="line">                return searchVO;</span><br><span class="line">            &#125;catch (Exception e)&#123;</span><br><span class="line">                log.error(&quot;查询异常&quot;,e);</span><br><span class="line">                throw new BusinessException(ErrorCode.SYSTEM_ERROR,&quot;查询异常&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            //如果不为空</span><br><span class="line">            SearchVO searchVO = new SearchVO();</span><br><span class="line">            switch (searchTypeEnum) &#123;</span><br><span class="line">                case POST:</span><br><span class="line">                    PostQueryRequest postQueryRequest = new PostQueryRequest();</span><br><span class="line">                    postQueryRequest.setSearchText(searchText);</span><br><span class="line">                    Page&lt;PostVO&gt; postVOPage = postService.listPostVOByPage(postQueryRequest, request);</span><br><span class="line">                    searchVO.setPostList(postVOPage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">                case USER:</span><br><span class="line">                    UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                    userQueryRequest.setUserName(searchText);</span><br><span class="line">                    Page&lt;UserVO&gt; userVOPage = userService.listUserVoByPage(userQueryRequest);</span><br><span class="line">                    searchVO.setUserList(userVOPage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">                case PICTURE:</span><br><span class="line">                    Page&lt;Picture&gt; picturePage = pictureService.searchPicture(searchText, 1, 10);</span><br><span class="line">                    searchVO.setPictureList(picturePage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">            &#125;</span><br><span class="line">            return searchVO;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>5.还有一个好处，可以简化switch的判断</p>
-<p>修改返回特定数据的逻辑</p>
-<p>修改前</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//如果不为空</span><br><span class="line">            SearchVO searchVO = new SearchVO();</span><br><span class="line">            switch (searchTypeEnum) &#123;</span><br><span class="line">                case POST:</span><br><span class="line">                    PostQueryRequest postQueryRequest = new PostQueryRequest();</span><br><span class="line">                    postQueryRequest.setSearchText(searchText);</span><br><span class="line">                    Page&lt;PostVO&gt; postVOPage = postService.listPostVOByPage(postQueryRequest, request);</span><br><span class="line">                    searchVO.setPostList(postVOPage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">                case USER:</span><br><span class="line">                    UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                    userQueryRequest.setUserName(searchText);</span><br><span class="line">                    Page&lt;UserVO&gt; userVOPage = userService.listUserVoByPage(userQueryRequest);</span><br><span class="line">                    searchVO.setUserList(userVOPage.getRecords());</span><br><span class="line">                    break;</span><br><span class="line">                case PICTURE:</span><br><span class="line">                    Page&lt;Picture&gt; picturePage = pictureService.searchPicture(searchText, 1, 10);</span><br><span class="line">                    searchVO.setPictureList(picturePage.getRecords());</span><br><span class="line">                    break;</span><br></pre></td></tr></table></figure>
-
-<p>修改后</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">DataSource dataSource = null;</span><br><span class="line"></span><br><span class="line">switch (searchTypeEnum)&#123;</span><br><span class="line"></span><br><span class="line">    case POST:</span><br><span class="line">        dataSource = postDataSource;</span><br><span class="line">        break;</span><br><span class="line">    case USER:</span><br><span class="line">        dataSource = userDataSource;</span><br><span class="line">        break;</span><br><span class="line">    case PICTURE:</span><br><span class="line">        dataSource = pictureDataSource;</span><br><span class="line">        break;</span><br><span class="line">&#125;</span><br><span class="line">dataSource.doSearch(searchText,current,pageSize);</span><br></pre></td></tr></table></figure>
-
-<p>再次修改</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//本质上是做了一个注册</span><br><span class="line">Map&lt;String, DataSource&lt;T&gt;&gt; typeDataSourceMap = new HashMap()&#123;&#123;</span><br><span class="line">   put(SearchTypeEnum.POST.getValue(), postDataSource);</span><br><span class="line">   put(SearchTypeEnum.USER.getValue(), userDataSource);</span><br><span class="line">   put(SearchTypeEnum.PICTURE.getValue(), pictureDataSource);</span><br><span class="line">&#125;&#125;;</span><br><span class="line">SearchVO searchVO = new SearchVO();</span><br><span class="line">DataSource&lt;?&gt; dataSource = typeDataSourceMap.get(type);</span><br><span class="line">Page page = dataSource.doSearch(searchText, current, pageSize);</span><br><span class="line">searchVO.setDataList(page.getRecords());</span><br><span class="line">return searchVO;</span><br></pre></td></tr></table></figure>
-
-<p>再次修改（把注册这部分提取出来）</p>
-<p>构建注册中心</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 数据源注册中心</span><br><span class="line"> */</span><br><span class="line">@Component</span><br><span class="line">public class DataSourceRegistry &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private PostDataSource postDataSource;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private UserDataSource userDataSource;</span><br><span class="line"></span><br><span class="line">    //注入</span><br><span class="line">    @Resource</span><br><span class="line">    private PictureDataSource pictureDataSource;</span><br><span class="line">    Map&lt;String, DataSource&lt;T&gt;&gt; typeDataSourceMap = new HashMap()&#123;&#123;</span><br><span class="line">        put(SearchTypeEnum.POST.getValue(), postDataSource);</span><br><span class="line">        put(SearchTypeEnum.USER.getValue(), userDataSource);</span><br><span class="line">        put(SearchTypeEnum.PICTURE.getValue(), pictureDataSource);</span><br><span class="line">    &#125;&#125;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 从map中获取对应的数据源</span><br><span class="line">     * @param type</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public  DataSource getDataSourceByType(String type)&#123;</span><br><span class="line">        return  typeDataSourceMap.get(type);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>使用注册中心</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SearchVO searchVO = new SearchVO();</span><br><span class="line">            DataSource&lt;?&gt; dataSource = dataSourceRegistry.getDataSourceByType(type);</span><br><span class="line">            Page page = dataSource.doSearch(searchText, current, pageSize);</span><br><span class="line">            searchVO.setDataList(page.getRecords());</span><br><span class="line">            return searchVO;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>6.修改后的搜索门面</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 搜索门面</span><br><span class="line"> */</span><br><span class="line">@Component</span><br><span class="line">@Slf4j</span><br><span class="line">public class SearchFacade &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private PostDataSource postDataSource;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private UserDataSource userDataSource;</span><br><span class="line"></span><br><span class="line">    //注入</span><br><span class="line">    @Resource</span><br><span class="line">    private PictureDataSource pictureDataSource;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private DataSourceRegistry dataSourceRegistry;</span><br><span class="line">    </span><br><span class="line">    @PostMapping(&quot;/all&quot;)</span><br><span class="line">    public SearchVO searchALL(@RequestBody SearchRequest searchRequest, HttpServletRequest request)&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        String type = searchRequest.getType();</span><br><span class="line">        //判断取出的type值中是否有对应的参数类型</span><br><span class="line">        SearchTypeEnum searchTypeEnum = SearchTypeEnum.getEnumByValue(type);</span><br><span class="line">        ThrowUtils.throwIf(StringUtils.isBlank(type), ErrorCode.PARAMS_ERROR);</span><br><span class="line">        String searchText = searchRequest.getSearchText();</span><br><span class="line">        int current = searchRequest.getCurrent();</span><br><span class="line">        int pageSize = searchRequest.getPageSize();</span><br><span class="line"></span><br><span class="line">        //如果为空则输出所有数据</span><br><span class="line">        if (searchTypeEnum == null)&#123;</span><br><span class="line">            //异步将所有前端的请求进行封装</span><br><span class="line">            CompletableFuture&lt;Page&lt;UserVO&gt;&gt; userTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                userQueryRequest.setUserName(searchText);</span><br><span class="line">                Page&lt;UserVO&gt; userVOPage = userDataSource.doSearch(searchText,current,pageSize);</span><br><span class="line">                return userVOPage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            CompletableFuture&lt;Page&lt;PostVO&gt;&gt; postTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                PostQueryRequest postQueryRequest = new PostQueryRequest();</span><br><span class="line">                postQueryRequest.setSearchText(searchText);</span><br><span class="line">                Page&lt;PostVO&gt; postVOPage = postDataSource.doSearch(searchText,current,pageSize);</span><br><span class="line">                return postVOPage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            CompletableFuture&lt;Page&lt;Picture&gt;&gt; pictureTask = CompletableFuture.supplyAsync(()-&gt;&#123;</span><br><span class="line">                UserQueryRequest userQueryRequest = new UserQueryRequest();</span><br><span class="line">                userQueryRequest.setUserName(searchText);</span><br><span class="line">                Page&lt;Picture&gt; picturePage = pictureDataSource.doSearch(searchText,current,pageSize);</span><br><span class="line">                return picturePage;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            try&#123;</span><br><span class="line">                //将所有的任务装在一起后才能继续往下执行</span><br><span class="line">                CompletableFuture.allOf(userTask,postTask,pictureTask).join();</span><br><span class="line"></span><br><span class="line">                Page&lt;UserVO&gt; userVOPage = userTask.get();</span><br><span class="line">                Page&lt;PostVO&gt; postVOPage = postTask.get();</span><br><span class="line">                Page&lt;Picture&gt; picturePage = pictureTask.get();</span><br><span class="line">                SearchVO searchVO = new SearchVO();</span><br><span class="line">                searchVO.setUserList(userVOPage.getRecords());</span><br><span class="line">                searchVO.setPostList(postVOPage.getRecords());</span><br><span class="line">                searchVO.setPictureList(picturePage.getRecords());</span><br><span class="line">                return searchVO;</span><br><span class="line">            &#125;catch (Exception e)&#123;</span><br><span class="line">                log.error(&quot;查询异常&quot;,e);</span><br><span class="line">                throw new BusinessException(ErrorCode.SYSTEM_ERROR,&quot;查询异常&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            //如果不为空</span><br><span class="line"></span><br><span class="line">            //本质上是做了一个注册</span><br><span class="line"></span><br><span class="line">            SearchVO searchVO = new SearchVO();</span><br><span class="line">            DataSource&lt;?&gt; dataSource = dataSourceRegistry.getDataSourceByType(type);</span><br><span class="line">            Page page = dataSource.doSearch(searchText, current, pageSize);</span><br><span class="line">            searchVO.setDataList(page.getRecords());</span><br><span class="line">            return searchVO;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<p>7.注册器模式（本质也是单例）</p>
-<p>提前通过一个map或者其它类型存储好后面需要调用的对象</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 数据源注册中心</span><br><span class="line"> */</span><br><span class="line">@Component</span><br><span class="line">public class DataSourceRegistry &#123;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private PostDataSource postDataSource;</span><br><span class="line"></span><br><span class="line">    @Resource</span><br><span class="line">    private UserDataSource userDataSource;</span><br><span class="line"></span><br><span class="line">    //注入</span><br><span class="line">    @Resource</span><br><span class="line">    private PictureDataSource pictureDataSource;</span><br><span class="line"></span><br><span class="line">    private  Map&lt;String, DataSource&lt;T&gt;&gt; typeDataSourceMap;</span><br><span class="line"></span><br><span class="line">    //依赖注入后才调用（也可以用静态代码块，只要保证项目初始化时调用即可）</span><br><span class="line">    @PostConstruct</span><br><span class="line">    public void doInit()&#123;</span><br><span class="line">        typeDataSourceMap =new HashMap()&#123;&#123;</span><br><span class="line">            put(SearchTypeEnum.POST.getValue(), postDataSource);</span><br><span class="line">            put(SearchTypeEnum.USER.getValue(), userDataSource);</span><br><span class="line">            put(SearchTypeEnum.PICTURE.getValue(), pictureDataSource);</span><br><span class="line">        &#125;&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * 从map中获取对应的数据源</span><br><span class="line">     * @param type</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    public  DataSource getDataSourceByType(String type)&#123;</span><br><span class="line">        //防止系统刚启动时就被别人调用</span><br><span class="line">        if (typeDataSourceMap == null)&#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        return  typeDataSourceMap.get(type);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>效果：代码大幅度减少，可维护可扩展</p>
-<h4 id="Elastic-Stack-一套技术栈"><a href="#Elastic-Stack-一套技术栈" class="headerlink" title="Elastic Stack(一套技术栈)"></a>Elastic Stack(一套技术栈)</h4><p>ES完全理解为MySQL</p>
-<p>ES分为三个部分</p>
-<p> 整合&#x3D;&gt;存储&#x3D;&gt;存储&#x3D;&gt;使用</p>
-<p>架构：</p>
-<p>beats: 从各种不同类型的文件&#x2F;应用来<strong>采集数据</strong>  <strong>a,b,c,d,e,aa,bb,cc</strong></p>
-<p>logstash:从多个采集器或数据源来抽取&#x2F;转换数据，向es输送 aa,bb,cc</p>
-<p>elasticsearch: 存储，查询数据</p>
-<p>kibana:可视化es的数据</p>
-<h4 id="安装ES"><a href="#安装ES" class="headerlink" title="安装ES"></a>安装ES</h4><p>elasticsearch</p>
-<p>kibana</p>
-<p><strong>只要是一套技术，所有版本必须一致</strong></p>
-<h4 id="Elasticsearch概念"><a href="#Elasticsearch概念" class="headerlink" title="Elasticsearch概念"></a>Elasticsearch概念</h4><p>你就把这个当成MySQL一样的数据库</p>
-<p>Index索引 &#x3D;&gt; MySQL里的表(table)</p>
-<p>建表、增删改查(查询需要花费的学习时间最多)</p>
-<p>用客户端去调用ElasticSearch(3种)</p>
-<p>语法: SQL、代码的方法（4种语法）</p>
-<p><strong>搜索需要分词</strong></p>
-<p>ES相比MySQL，能够自动帮我们做分词，能够非常高效、灵活地查询内容。</p>
-<h4 id="索引："><a href="#索引：" class="headerlink" title="索引："></a>索引：</h4><p>在ES中索引相当于是MySQL中的表</p>
-<p>正向索引：理解为书籍的目录，可以快速帮你找到对应的内容（根据页码找到文章）</p>
-<p>倒排索引：</p>
-<p>文章A：你好，我是XXX</p>
-<p>文章B：zlz你好，我是zzz</p>
-<p>怎么根据内容找到文章，可以构建倒排索引</p>
-<p>例子：</p>
-<p>你好，我是，XXX</p>
-<p>zlz，你好，我是，zzz</p>
-<p>倒排索引表</p>
-<table>
-<thead>
-<tr>
-<th>词</th>
-<th>内容id</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>你好</td>
-<td>文章A，B</td>
-</tr>
-<tr>
-<td>我是</td>
-<td>文章A，B</td>
-</tr>
-<tr>
-<td>XXX</td>
-<td>文章A</td>
-</tr>
-<tr>
-<td>zlz</td>
-<td>文章B</td>
-</tr>
-<tr>
-<td>zzz</td>
-<td>文章B</td>
-</tr>
-</tbody></table>
-<p>用户搜：”zlz zzz”</p>
-<p>ES先切词：zlz，zzz</p>
-<p>再去倒排索引表中对应的文章</p>
-<h4 id="ES的调用方式"><a href="#ES的调用方式" class="headerlink" title="ES的调用方式"></a>ES的调用方式</h4><p>1.restful api 调用（http请求）</p>
-<p>localhost:9200</p>
-<p>curl方式也行</p>
-<p>ES启动端口</p>
-<p>1.9200：给外部用户（客户端调用）的</p>
-<p>2.9300：给ES集群内部通信的（外部调用不了）</p>
-<p>2.kibana：可视化es</p>
-<p>kibana devtools</p>
-<p>自由地对ES进行操作（本质也是 restful api）</p>
-<p>devtools不建议生产环境使用</p>
-<p>3.客户端调用</p>
-<p>java客户端</p>
-<h4 id="ES的语法"><a href="#ES的语法" class="headerlink" title="ES的语法"></a>ES的语法</h4><p><a class="link"   target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.17/getting-started.html" >https://www.elastic.co/guide/en/elasticsearch/reference/7.17/getting-started.html<i class="fas fa-external-link-alt"></i></a></p>
-<p>DSL</p>
-<p>和http请求最兼容的，应用最广，json格式好理解</p>
-<p>建表、插入语句</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">POST logs-my_app-default/_doc</span><br><span class="line">&#123;</span><br><span class="line">  &quot;@timestamp&quot;: &quot;2099-05-06T16:21:15.000Z&quot;,</span><br><span class="line">  &quot;event&quot;: &#123;</span><br><span class="line">    &quot;original&quot;: &quot;192.0.2.42 - - [06/May/2099:16:21:15 +0000] \&quot;GET /images/bg.jpg HTTP/1.0\&quot; 200 24736&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>查询</p>
-<p>DSL语法：domain special language 领域特定语言 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">GET logs-my_app-default/_search</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &#123;</span><br><span class="line">    &quot;match_all&quot;: &#123; &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;sort&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;@timestamp&quot;: &quot;desc&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>删除语法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE _data_stream/logs-my_app-default</span><br></pre></td></tr></table></figure>
-
-
-
-<p>根据id查询</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET post/_doc/f2pmLY8BAEbEyUOaiGDN</span><br></pre></td></tr></table></figure>
-
-
-
-<p>修改</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">POST post/_doc/f2pmLY8BAEbEyUOaiGDN</span><br><span class="line">&#123;</span><br><span class="line">  &quot;title&quot;: &quot;zlz2&quot;,</span><br><span class="line">  &quot;desc&quot;: &quot;zlz的描述2&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h4 id="Mapping"><a href="#Mapping" class="headerlink" title="Mapping"></a>Mapping</h4><p>理解为数据库的表结构，有哪些字段，有哪些类型</p>
-<p>它比MySQL的字段还要灵活</p>
-<p>类型：</p>
-<p>动态Mapping：自动创建，动态发生变化</p>
-<p>显式Mapping：自己建表，自己指定</p>
-<p>动态Mapping</p>
-<p>输入				类型</p>
-<p>true&#x2F;false  &#x3D;&gt; boolean</p>
-<p>double      &#x3D;&gt;  float</p>
-<p>array       &#x3D;&gt;   数组中第一个非空元素的类型</p>
-<p>查询某个表的表结构的语法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET post/_mapping</span><br></pre></td></tr></table></figure>
-
-
-
-<p>ES支持动态mapping,表结构可以动态改变，而不像MySQL一样必须手动创建表,没有的字段就不能插入。</p>
-<p>注意：如果字段类型是keyword，那么ES就不会对keyword进行切词</p>
-<p>显式Mapping</p>
-<p>建表语句</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PUT /my-index-000001</span><br><span class="line">&#123;</span><br><span class="line">  &quot;mappings&quot;: &#123;</span><br><span class="line">    &quot;properties&quot;: &#123;</span><br><span class="line">      &quot;age&quot;:    &#123; &quot;type&quot;: &quot;integer&quot; &#125;,  </span><br><span class="line">      &quot;email&quot;:  &#123; &quot;type&quot;: &quot;keyword&quot;  &#125;, </span><br><span class="line">      &quot;name&quot;:   &#123; &quot;type&quot;: &quot;text&quot;  &#125;     </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-<h4 id="ECS：与上述的建文档差别大"><a href="#ECS：与上述的建文档差别大" class="headerlink" title="ECS：与上述的建文档差别大"></a>ECS：与上述的建文档差别大</h4><p>专门存储事件数据（指标，每秒钟CPU，内存占用多少）和整合类数据</p>
-<p>在建表的时候有@timestamp和event（这种就不能使用上述的查表语句）</p>
-<p>建表语句：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">POST my_event/_doc</span><br><span class="line">&#123;</span><br><span class="line">  &quot;title&quot;: &quot;zlz&quot;,</span><br><span class="line">  &quot;@timestamp&quot;: &quot;2099-05-06T16:21:15.000Z&quot;,</span><br><span class="line">  &quot;event&quot;: &#123;</span><br><span class="line">    &quot;original&quot;: &quot;192.0.2.42 - - [06/May/2099:16:21:15 +0000] \&quot;GET /images/bg.jpg HTTP/1.0\&quot; 200 24736&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<p>EQL：专门查询ECS文档（标准指标文档）的数据语法，更加规范，只适用于特定场景</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">GET my_event/_eql/search</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &quot;&quot;&quot;</span><br><span class="line">    any where 1==1</span><br><span class="line">  &quot;&quot;&quot;,</span><br><span class="line">  &quot;size&quot;: 50</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>SQL：学习成本低，但是需要插件支持，但是性能差</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">POST /_sql?format=txt</span><br><span class="line">&#123;</span><br><span class="line">  &quot;query&quot;: &quot;SELECT * FROM post where title like &#x27;%zlz%&#x27;&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-<p> Painless Scripting language</p>
-<p>编程的方式取值，学习成本高</p>
-<h3 id="用ES实现搜索接口"><a href="#用ES实现搜索接口" class="headerlink" title="用ES实现搜索接口"></a>用ES实现搜索接口</h3><p>1.建表</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">create table if not exists post(</span><br><span class="line">   id           bigint auto_increment comment &#x27;id&#x27; primary key,</span><br><span class="line">   title        varchar(512)                           null comment &#x27;标题&#x27;,</span><br><span class="line">   content      text                          null comment &#x27;公告内容&#x27;,</span><br><span class="line">   tags         varchar(1024)                          null comment &#x27;标签列表（Json数组）&#x27;,</span><br><span class="line">   thumbNum     int          default 0                 not null comment &#x27;点赞数&#x27;,</span><br><span class="line">   favourNum    int          default 0                 not null comment &#x27;收藏数&#x27;,</span><br><span class="line">   userId       bigint                                 not null comment &#x27;创建用户id&#x27;,</span><br><span class="line">   createTime   datetime     default CURRENT_TIMESTAMP not null comment &#x27;创建时间&#x27;,</span><br><span class="line">   updateTime   datetime     default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment &#x27;更新时间&#x27;,</span><br><span class="line">   isDelete     tinyint      default 0                 not null comment &#x27;是否删除&#x27;,</span><br><span class="line">   index idx_userId(userId)</span><br><span class="line">) comment &#x27;帖子&#x27; collate  = utf8mb4_unicode_ci;</span><br></pre></td></tr></table></figure>
-
-<p> 2.ES Mapping</p>
-<p>在es中声明字段类型，既可以存放多个值，也可以存放单个值</p>
-<p>ES中，尽量存放需要用户筛选（搜索）的数据,不要存放频繁变化的数据</p>
-<p>字段类型是text,这个字段是可被分词的，可模糊查询的；而如果是keyword,只能完全匹配、精确查询。</p>
-<p>analyzer(存储时生效的分词器)，ik_max_word，拆的更碎、索引更多，更有可能被搜出来</p>
-<p>search_analyzer(查询时生效的分词器)，ik_smart，更偏向于用户想搜的分词</p>
-<p>但如果用户又想精确查找一大段话，又要精确分词，就要加子字段fileds，并且类型为keyword</p>
-<p>ES表结构</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">put post_v1</span><br><span class="line">&#123;</span><br><span class="line">//别名，为了方便后续数据迁移</span><br><span class="line">  &quot;aliases&quot;: &#123;</span><br><span class="line">    &quot;post&quot;: &#123;&#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;mappings&quot;: &#123;</span><br><span class="line">    &quot;properties&quot;: &#123;</span><br><span class="line">      &quot;title&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;text&quot;,</span><br><span class="line">        //使用分词器</span><br><span class="line">        &quot;analyzer&quot;: &quot;ik_max_word&quot;,</span><br><span class="line">        &quot;search_analyzer&quot;: &quot;ik_smart&quot;,</span><br><span class="line">        //但如果用户又想精确查找一大段话，又要精确分词，就要加子字段fileds</span><br><span class="line">        &quot;fields&quot;: &#123;</span><br><span class="line">          &quot;keyword&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;keyword&quot;,</span><br><span class="line">            &quot;ignore_above&quot;: 256 //如果用户的搜索词大于256个单词则拒绝查询</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;content&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;text&quot;,</span><br><span class="line">        &quot;analyzer&quot;: &quot;ik_max_word&quot;,</span><br><span class="line">        &quot;search_analyzer&quot;: &quot;ik_smart&quot;,</span><br><span class="line">        &quot;fields&quot;: &#123;</span><br><span class="line">          &quot;keyword&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;keyword&quot;,</span><br><span class="line">            &quot;ignore_above&quot;: 256</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;tags&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;keyword&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;userId&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;keyword&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;createTime&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;date&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;updateTime&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;date&quot;</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;isDelete&quot;: &#123;</span><br><span class="line">        &quot;type&quot;: &quot;keyword&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h4 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h4><p>@Id的作用：如果你插入数据时指明了id，则系统提供的id与你提供的id是一样的</p>
-<p>如果不输入id，系统会自动生成，但是不会在_source字段中补充id的值，所以建议手动指定id。</p>
-<p>查询DSL：</p>
-<p>组合条件</p>
-<p>里面有个打分机制，根据关键字来区分是否有影响（must：有影响。filter：没影响）两个关键字效果一样</p>
-<h4 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h4><p>logstash+kafka+beats</p>
-<p>1.下载logstash，并修改config文件中的输入输出配置</p>
-<p>2.logstash性能差，但是支持很多种输入输出</p>
-<p>3.编写logstash配置：</p>
-<p>输入配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">  jdbc &#123;</span><br><span class="line">    jdbc_driver_library =&gt; &quot;D:\software\logstash-7.17.9\config\mysql-connector-java-8.0.29.jar&quot;</span><br><span class="line">    jdbc_driver_class =&gt; &quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">    jdbc_connection_string =&gt; &quot;jdbc:mysql://localhost:3306/zbi&quot;</span><br><span class="line">    jdbc_user =&gt; &quot;root&quot;</span><br><span class="line">    jdbc_password=&gt; &quot;123456&quot;</span><br><span class="line">    //sql_last_value：动态替换上次更新的最大时间</span><br><span class="line">    statement =&gt; &quot;SELECT * from post where updateTime &gt; :sql_last_value and updateTime &lt; now() order by updateTime desc&quot;    </span><br><span class="line">    //指定跟踪字段名，把最后一条的updateTime写进去</span><br><span class="line">    tracking_column =&gt; &quot;_sequence_key&quot;</span><br><span class="line">    tracking_column_type =&gt; &quot;numeric&quot;  </span><br><span class="line">    use_column_value =&gt; true</span><br><span class="line">    parameters =&gt; &#123; &quot;favorite_artist&quot; =&gt; &quot;Beethoven&quot; &#125;</span><br><span class="line">    schedule =&gt; &quot;*/5 * * * * *&quot;</span><br><span class="line">    jdbc_default_timezone =&gt; &quot;Asia/Shanghai&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>上述代码种使用SELECT * from post where updateTime &gt; :sql_last_value 预编译的SQL有什么优点？</p>
-<p>1.灵活，模板好懂</p>
-<p>2.快（有缓存）</p>
-<p>3.部分防止SQL注入。</p>
-<p>输出配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">output &#123;</span><br><span class="line">  stdout &#123; codec =&gt; rubydebug &#125;</span><br><span class="line">  elasticsearch &#123;</span><br><span class="line">        hosts =&gt; &quot;hostname&quot;</span><br><span class="line">        index =&gt; &quot;post_v1&quot;</span><br><span class="line">        document_id =&gt; &quot;%&#123;id&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>document_id &#x3D;&gt; “%{id}”将上述logstash从数据库中输入的id赋值给es的id</p>
-<p>两个问题：</p>
-<p>1.字段全变成小写了</p>
-<p>2.多了一些不想同步的字段</p>
-<p>方法：增加过滤</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">filter &#123;</span><br><span class="line">    mutate &#123;</span><br><span class="line">        rename =&gt; &#123;</span><br><span class="line">               &quot;updatetime&quot; =&gt; &quot;updateTime&quot;</span><br><span class="line">               &quot;userid&quot; =&gt; &quot;userId&quot;</span><br><span class="line">               &quot;createtime&quot; =&gt; &quot;createTime&quot;</span><br><span class="line">               &quot;isdelete&quot; =&gt; &quot;isDelete&quot;      </span><br><span class="line">              &#125;</span><br><span class="line">        remove_field =&gt; [&quot;thumbnum&quot;, &quot;favournum&quot;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-                    
-                </div>
-
-                
-
-                <div class="post-bottom-tags-and-share border-box">
-                    <div>
-                        
-                            <ul class="post-tags-box border-box">
-                                
-                                    <li class="tag-item border-box">
-                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Java-ES-%E9%97%A8%E9%9D%A2%E6%A8%A1%E5%BC%8F-%E9%80%82%E9%85%8D%E5%99%A8%E6%A8%A1%E5%BC%8F-%E7%88%AC%E8%99%AB/">Java ES 门面模式 适配器模式 爬虫</a>
-                                    </li>
-                                
-                            </ul>
-                        
-                    </div>
-                    <div>
-                        
-                    </div>
-                </div>
-
-                
-
-                
-                    <div class="post-nav border-box">
-                        
-                            <div class="prev-post">
-                                <a class="prev"
-                                   rel="prev"
-                                   href="/2024/07/17/%E7%BC%96%E7%A8%8B%E5%9C%A8%E7%BA%BF%E8%AF%84%E6%B5%8B%E5%B9%B3%E5%8F%B0/"
-                                   title="编程在线评测平台"
-                                >
-                                    <span class="left arrow-icon flex-center">
-                                        <i class="fas fa-chevron-left"></i>
-                                    </span>
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">编程在线评测平台</span>
-                                        <span class="post-nav-item">Prev posts</span>
-                                    </span>
-                                </a>
-                            </div>
-                        
-                        
-                            <div class="next-post">
-                                <a class="next"
-                                   rel="next"
-                                   href="/2024/07/17/%E8%BD%AE%E5%AD%90%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8%E5%85%B1%E4%BA%AB%E5%B9%B3%E5%8F%B0/"
-                                   title="轮子代码生成器共享平台"
-                                >
-                                    <span class="title flex-center">
-                                        <span class="post-nav-title-item text-ellipsis">轮子代码生成器共享平台</span>
-                                        <span class="post-nav-item">Next posts</span>
-                                    </span>
-                                    <span class="right arrow-icon flex-center">
-                                        <i class="fas fa-chevron-right"></i>
-                                    </span>
-                                </a>
-                            </div>
-                        
-                    </div>
-                
-
-                
-                    
-
-
-
-
-
-
-                
-            </div>
-        </div>
-
-        
-    </div>
-</div>
+                    @import "../../common/stylus-variables.styl"
+
+$avatar-width = 3.2rem
+$arrow-icon-width = 1rem
+$post-nav-max-width = 14rem
+$post-title-font-size = 1.6rem
+$toc-container-width = 15rem
+$spacer-padding = 2rem
+
+
+.post-page-container {
+  display flex
+  justify-content space-between
+  width 100%
+  height 100%
+
+  &.show-toc {
+    .pc-post-toc {
+      display block
+    }
+
+    .post-content-container {
+      width 'calc(100% - %s)' % $toc-container-width
+    }
+  }
+
+
+  &.encrypt {
+    .post-aging-tips {
+      display none !important
+    }
+  }
+
+
+  +keep-tablet() {
+    .pc-post-toc {
+      display none !important
+    }
+
+    .post-content-container {
+      width 100% !important
+    }
+  }
+
+
+  .post-content-container {
+    order 0
+    width 100%
+    height 100%
+
+
+    keep-container(1, 0, 2rem)
+
+    +keep-mobile() {
+      padding 0 0.2rem !important
+      box-shadow none !important
+
+      &:hover {
+        box-shadow none !important
+      }
+    }
+
+
+    .post-content-top {
+      display flex
+      align-items flex-end
+      width 100%
+      padding-top $spacer-padding
+      padding-right $spacer-padding
+      overflow hidden
+      background-color var(--background-color-2)
+      border-top-left-radius var(--box-border-radius)
+      border-top-right-radius var(--box-border-radius)
+
+      +keep-tablet() {
+        height 12.8rem
+        padding-top $spacer-padding * 0.8
+        padding-right $spacer-padding  * 0.8
+
+        .cover-post-title {
+          padding $spacer-padding * 0.5 * 0.8 $spacer-padding * 0.8 !important
+          font-size $post-title-font-size * 0.9 !important
+          line-height 1.5 !important
+        }
+      }
+
+
+      +keep-mobile() {
+        height 11.8rem
+        padding-top $spacer-padding * 0.6
+        padding-right $spacer-padding  * 0.6
+
+        .cover-post-title {
+          padding $spacer-padding * 0.5 * 0.6 $spacer-padding * 0.6 !important
+          font-size $post-title-font-size * 0.8 !important
+          line-height 1.4 !important
+        }
+      }
+
+
+      .cover-post-title {
+        position relative
+        z-index $z-index-1
+        box-sizing border-box
+        max-width 100%
+        max-height 100%
+        padding $spacer-padding * 0.5 $spacer-padding
+        overflow-y auto
+        color var(--text-color-2)
+        font-weight 600
+        font-size $post-title-font-size
+        line-height 1.6
+        background var(--background-color-1-transparent)
+        border-top-right-radius var(--box-border-radius)
+        -webkit-backdrop-filter blur(2px)
+        backdrop-filter blur(2px)
+      }
+
+
+      .post-cover {
+        position absolute
+        top 0
+        left 0
+        box-sizing border-box
+        width 100%
+        height 100%
+        object-fit cover
+      }
+    }
+
+
+    .post-content-bottom {
+      padding $spacer-padding
+
+      &.has-cover {
+        padding-top $spacer-padding * 0.5
+      }
+
+      +keep-mobile() {
+        padding $spacer-padding * 0.5 0 !important
+      }
+
+      .post-title {
+        color var(--text-color-2)
+        font-weight 600
+        font-size $post-title-font-size
+        line-height 1.6
+        text-align var(--post-title-align)
+
+        +keep-tablet() {
+          font-size $post-title-font-size * 0.9
+        }
+
+        +keep-mobile() {
+          font-size $post-title-font-size * 0.8
+        }
+      }
+
+
+      .post-header {
+        display flex
+        justify-content flex-start
+        width 100%
+        margin-top 1rem
+
+        +keep-tablet() {
+          margin-top 0.9rem
+          transform scale(0.9)
+          transform-origin left top
+        }
+
+        .avatar-box {
+          display var(--post-author-avatar)
+          flex-shrink 0
+          width $avatar-width
+          height $avatar-width
+          margin-right 0.8rem
+          padding 0.1rem
+          border 1px solid var(--border-color)
+          border-radius 50%
+
+          img {
+            width 100%
+            height 100%
+            background var(--avatar-background-color)
+            border-radius 50%
+          }
+        }
+
+
+        .info-box {
+          display flex
+          flex-direction column
+          justify-content space-between
+          box-sizing border-box
+          width 100%
+          height 100%
+          padding 0.2rem 0
+
+          .author {
+            display var(--post-author-name)
+            align-items center
+            font-weight 600
+            font-size 1.18rem
+
+            .name {
+              color var(--text-color-3)
+            }
+
+            .author-badge {
+              margin-left 0.8rem
+              padding 0 0.4rem
+              color #fff
+              font-weight 500
+              font-size 0.8rem
+              background var(--primary-color)
+              border-radius 0.4rem
+            }
+          }
+
+          .meta-info {
+            margin-top 0.1rem
+          }
+        }
+      }
+
+
+      .post-content {
+        margin-top calc(var(--component-gap) * 0.8)
+        padding-bottom calc(var(--component-gap) * 0.8)
+        color var(--text-color-3)
+        text-align justify
+        word-wrap break-word
+
+        &.code-block-unshrink {
+          figure.highlight {
+            height auto !important
+            overflow auto !important
+
+            .shrink-line {
+              display none !important
+            }
+          }
+        }
+
+
+        +keep-tablet() {
+          margin-top calc(var(--component-gap) * 0.6)
+          padding-bottom calc(var(--component-gap) * 0.6)
+        }
+
+
+        .post-aging-tips {
+          position relative
+          display none
+          box-sizing border-box
+          margin-bottom 1.8rem
+          padding 1rem
+          color var(--keep-warning-color)
+          line-height 1.6
+          background var(--keep-warning-background-color)
+          border 0.1rem solid var(--keep-warning-border-color)
+          border-radius 0.4rem
+
+          i {
+            margin-right 0.4rem
+            color var(--keep-warning-color)
+          }
+
+          .days {
+            color var(--keep-warning-color)
+          }
+        }
+
+
+        .post-encrypt-box {
+          margin-left $avatar-width + 0.8rem
+          padding 1rem 0
+
+          .password-input {
+            width 60%
+            margin 0
+            padding 0.8rem 1.2rem
+            color var(--text-color-3)
+            font-weight 400 !important
+            font-size 1.2rem
+            letter-spacing 2px
+            background none
+            border none
+            border-bottom 0.2rem solid var(--border-color)
+            outline none
+
+            +keep-tablet() {
+              width 80%
+            }
+
+            &.error {
+              border 0.2rem solid var(--keep-danger-color)
+            }
+
+            &::placeholder {
+              color var(--text-color-4)
+              font-size 1.1rem
+              letter-spacing 1px
+            }
+
+            &:hover
+            &:focus {
+              background var(--background-color-2)
+            }
+          }
+        }
+
+        if (hexo-config('post') && hexo-config('post.copyright_info') == true) {
+          border-bottom 2px dashed var(--border-color)
+        }
+      }
+
+
+      .post-bottom-tags-and-share {
+        display flex
+        justify-content space-between
+        width 100%
+        margin-top 1rem
+
+        .post-tags-box {
+          display flex
+          flex-wrap wrap
+          align-items center
+          justify-content flex-start
+          width 100%
+          font-size 0.96rem
+
+
+          .tag-item {
+            margin-right 0.4rem
+            line-height 2
+
+            .icon {
+              color var(--text-color-3)
+              font-size 0.88rem
+            }
+          }
+        }
+      }
+
+
+      .post-nav {
+        height 2.8rem
+        margin-top var(--component-gap)
+
+        .prev-post
+        .next-post {
+          box-sizing border-box
+          max-width $post-nav-max-width
+          height 100%
+          keep-container(1, 0.8rem, 0)
+          border-radius 0.32rem
+
+
+          a {
+            position relative
+            display block
+            box-sizing border-box
+            width 100%
+            height 100%
+
+            &.prev {
+              padding-left $arrow-icon-width
+            }
+
+            &.next {
+              padding-right $arrow-icon-width
+            }
+
+            .arrow-icon {
+              position absolute
+              top 0
+              width $arrow-icon-width
+              height 100%
+
+              &.left {
+                left 0
+              }
+
+              &.right {
+                right 0
+              }
+            }
+
+            .title {
+              width 100%
+              height 100%
+            }
+          }
+        }
+
+        .prev-post {
+          float left
+        }
+
+        .next-post {
+          float right
+        }
+
+        .post-nav-item {
+          display none
+
+          +keep-tablet() {
+            display inline-block
+          }
+        }
+
+
+        .post-nav-title-item {
+          +keep-tablet() {
+            display none
+          }
+        }
+      }
+    }
+  }
+
+
+  .pc-post-toc {
+    position sticky
+    top calc(var(--header-height) + var(--component-gap))
+    display none
+    flex-shrink 0
+    box-sizing border-box
+    width $toc-container-width
+    max-height calc(100vh - calc(var(--header-height) + var(--component-gap)))
+    transition-t("top, display, max-height", "0, 0, 0", "0.2, 0.1, 0.2", "ease, ease, ease")
+
+    &.right-toc {
+      order 1
+      padding 2rem 0 2rem 1.8rem
+    }
+
+    &.left-toc {
+      order -1
+      padding 2rem 1.8rem 2rem 0
+    }
+
+    .header-shrink & {
+      top calc(var(--header-shrink-height) + var(--component-gap))
+      max-height calc(100vh - calc(var(--header-shrink-height) + var(--component-gap)))
+    }
+  }
+}
 
 
                 
@@ -607,25 +1038,110 @@
         </div>
 
         <div class="page-main-content-bottom border-box">
-            
-<footer class="footer border-box">
-    <div class="copyright-info info-item">
-        &copy;&nbsp;<span>2020</span>&nbsp;-&nbsp;2024
-        
-            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">Keep Team</a>
-        
-    </div>
+            $shields-style-height = 22px
 
-    <div class="theme-info info-item">
-        Powered by&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;&&nbsp;Theme&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
-    </div>
+.footer {
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  padding 1rem 0
+  color var(--text-color-4)
+  font-size 1rem
 
-    
+  a {
+    color var(--text-color-4)
 
-    
+    &:hover {
+      color var(--primary-color)
+    }
 
-    
-</footer>
+    &.no-pointer {
+      pointer-events none
+    }
+  }
+
+
+  .info-item {
+    position relative
+    display flex
+    flex-wrap wrap
+    align-items center
+    justify-content center
+    box-sizing border-box
+    margin 0.2rem 0
+    color var(--text-color-4)
+
+    &.count-info {
+      display flex
+
+      .count-item {
+        &.uv
+        &.pv {
+          display none
+        }
+      }
+    }
+
+
+    &.deploy-info {
+
+      display flex
+
+      a
+      .tooltip {
+        display flex
+        align-items center
+      }
+
+      img {
+        height 1.08rem
+        margin 0 0.4rem
+      }
+    }
+
+
+    &.count-info
+    &.record-info {
+
+      .count-item
+      .record-item {
+        margin-right 15px
+
+        &::before {
+          position absolute
+          top 50%
+          left -10px
+          box-sizing border-box
+          transform translateY(-56%)
+          content '|'
+        }
+
+
+        &:first-child {
+          &::before {
+            display none
+          }
+        }
+
+
+        &:last-child {
+          margin-right 0
+        }
+
+
+        .item-type {
+          margin-right 4px
+        }
+      }
+    }
+  }
+
+
+  .icon-animate {
+    animation heartbeat-animate 1.2s ease-in-out infinite
+  }
+}
 
         </div>
     </div>
@@ -633,73 +1149,281 @@
     <!-- post tools -->
     
         <div class="post-tools right-toc">
-            <div class="post-tools-container border-box">
-    <ul class="post-tools-list border-box">
-        <!-- PC encrypt again -->
-        
+            $li-margin-bottom = 0.8rem
+$post-tool-button-width = 2.5rem
 
-        <!-- PC TOC show toggle -->
-        
+.post-tools-container {
+  padding-top var(--component-gap)
 
-        <!-- PC go comment -->
-        
+  .post-tools-list {
+    li {
+      margin-bottom $li-margin-bottom
 
-        <!-- PC full screen -->
-        <li class="tools-item flex-center full-screen">
-            <i class="fa-solid fa-expand"></i>
-        </li>
-    </ul>
-</div>
+      &:last-child {
+        margin-bottom 0
+      }
+    }
+
+
+    li.tools-item {
+      position relative
+      box-sizing border-box
+      width $post-tool-button-width
+      height $post-tool-button-width
+      color var(--text-color-3)
+      font-size 1.2rem
+      background var(--background-color-1)
+      border-radius 50%
+      box-shadow 2px 2px 5px var(--shadow-color)
+      cursor pointer
+
+      &:hover {
+        box-shadow 2px 2px 8px var(--shadow-hover-color)
+      }
+
+      i {
+        color var(--text-color-3)
+      }
+
+
+      &:hover {
+        color var(--background-color-1)
+        background var(--primary-color)
+
+        i {
+          color var(--background-color-1) !important
+        }
+      }
+
+
+      &.toggle-show-toc {
+        display none
+      }
+
+
+      &.go-to-comments {
+        .post-comments-count {
+          position absolute
+          top 0
+          right -1rem
+          display none
+          align-items center
+          justify-content center
+          box-sizing border-box
+          min-width 1.1rem
+          height 1.1rem
+          padding 0 0.2rem
+          color var(--badge-color)
+          font-size 12px
+          background var(--badge-background-color)
+          border-radius 0.4rem
+
+          +keep-tablet() {
+            display none !important
+          }
+        }
+      }
+    }
+
+
+    li.status-item {
+      width $post-tool-button-width
+      height $post-tool-button-width
+      color var(--text-color-3)
+      font-size 1.6rem
+      cursor pointer
+
+
+      &.post-lock {
+        cursor default
+
+        .fa-lock-open {
+          display none
+          color var(--keep-success-color)
+        }
+
+        &.decrypt {
+          cursor pointer
+
+          .fa-lock-open {
+            display block
+          }
+
+          .fa-lock {
+            display none
+          }
+        }
+      }
+    }
+  }
+}
 
         </div>
     
 
     <!-- side tools -->
     <div class="side-tools">
-        <div class="side-tools-container border-box ">
-    <ul class="side-tools-list side-tools-show-handle border-box">
-        <li class="tools-item tool-font-adjust-plus flex-center">
-            <i class="fas fa-search-plus"></i>
-        </li>
+        $tools-item-width = 2.2rem
+$tools-item-font-size = 1.1rem
+$tools-item-border-radius = 0.2rem
 
-        <li class="tools-item tool-font-adjust-minus flex-center">
-            <i class="fas fa-search-minus"></i>
-        </li>
+.side-tools-show-handle {
+  transform translateX(100%)
+  opacity 0
+  transition-t("transform, opacity", "0, 0", "0.26, 0.26", "linear, linear")
 
-        <li class="tools-item tool-toggle-theme-mode flex-center">
-            <i class="fas fa-moon"></i>
-        </li>
+  &.show {
+    transform translateX(0)
+    opacity 1
+  }
+}
 
-        <!-- rss -->
-        
+.side-tools-container {
+  .tools-item {
+    width $tools-item-width
+    height $tools-item-width
+    margin-bottom 0.25rem
+    color var(--text-color-3)
+    font-size $tools-item-font-size
+    background var(--background-color-1)
+    border-right none
+    border-radius $tools-item-border-radius
+    box-shadow 0.1rem 0.1rem 0.2rem var(--shadow-color)
+    cursor pointer
 
-        <li class="tools-item tool-scroll-to-bottom flex-center">
-            <i class="fas fa-arrow-down"></i>
-        </li>
-    </ul>
+    i {
+      color var(--text-color-3)
+    }
 
-    <ul class="exposed-tools-list border-box">
-        
+    &:hover {
+      color var(--background-color-1)
+      background var(--primary-color)
+      box-shadow 0.2rem 0.2rem 0.4rem var(--shadow-color)
 
-        
+      i {
+        color var(--background-color-1)
+      }
+    }
 
-        <li class="tools-item tool-toggle-show flex-center">
-            <i class="fas fa-cog fa-spin"></i>
-        </li>
 
-        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
-            <i class="arrow fas fa-arrow-up"></i>
-            <span class="percent"></span>
-        </li>
-    </ul>
-</div>
+    +keep-tablet() {
+      width $tools-item-width * 0.9
+      height $tools-item-width * 0.9
+      font-size $tools-item-font-size * 0.9
+
+      &.toggle-show-toc-tablet
+      &.go-to-comments-tablet {
+        display flex !important
+      }
+    }
+
+    &.rss {
+
+      a {
+        width 100%
+        height 100%
+        border-radius $tools-item-border-radius
+
+        &:hover {
+          color var(--background-color-1)
+          background var(--primary-color)
+          box-shadow 0.2rem 0.2rem 0.4rem var(--shadow-color)
+        }
+      }
+    }
+
+    &.toggle-show-toc-tablet
+    &.go-to-comments-tablet {
+      display none
+    }
+  }
+
+
+  .exposed-tools-list {
+
+    .tool-scroll-to-top {
+      display none
+
+      &.show {
+        display flex
+      }
+
+
+      &.show-arrow {
+        .percent {
+          display none
+        }
+
+        .arrow {
+          display flex
+        }
+      }
+
+
+      &.show-percent {
+        .percent {
+          display flex
+        }
+
+        .arrow {
+          display none
+        }
+      }
+
+
+      &:hover {
+        .percent {
+          display none
+        }
+
+        .arrow {
+          display flex
+        }
+      }
+
+
+      .percent {
+        font-size 1rem
+      }
+    }
+  }
+}
 
     </div>
 
     <!-- image mask -->
-    <div class="zoom-in-image-mask">
-    <img class="zoom-in-image">
-</div>
+    .zoom-in-image-mask {
+  position fixed
+  top 0
+  right 0
+  bottom 0
+  left 0
+  z-index $z-index-8
+  display flex
+  align-items center
+  justify-content center
+  box-sizing border-box
+  background rgba(0, 0, 0, 0)
+  visibility hidden
+  transition-t("visibility, background", "0, 0", "0.3, 0.3", "linear, linear")
+
+  &.show {
+    background rgba(0, 0, 0, 0.5)
+    visibility visible
+
+    .zoom-in-image {
+      cursor zoom-out
+    }
+  }
+
+  .zoom-in-image {
+    position absolute
+    z-index $z-index-9
+    transform-origin center center
+    will-change transform
+    transition-t("transform", "0", "0.3", "linear")
+  }
+}
 
 
     <!-- local search -->
